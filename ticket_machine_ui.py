@@ -12,7 +12,7 @@ def get_input(list_of_options, message, messages):
     while user_input not in range(len(list_of_options)):
         print_options([messages[option] for option in list_of_options])
         try:
-            user_input = int(input(message))
+            user_input = int(input(messages[message] + ' '))
         except ValueError:
             user_input = None
     return list_of_options[user_input]
@@ -28,6 +28,7 @@ def change_language(language):
 
 
 def ui():
+    pass
     messages = change_language('ENG')
     available_languages = ['ENG', 'PL']
     language = get_input(available_languages, 'choose_language', messages)
@@ -36,3 +37,5 @@ def ui():
     #     'buy_long_term_ticket',
     #     'other_long_term_ticket'
     #     ]
+
+ui()

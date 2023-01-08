@@ -1,5 +1,5 @@
-code_name, ui_message
-choose_language, Choose a language
-ENG, English
-PL, Polish
-choose_action, Choose an action
+code_name,ui_message
+choose_language,Choose a language
+ENG,English
+PL,Polish
+choose_action,Choose an action
