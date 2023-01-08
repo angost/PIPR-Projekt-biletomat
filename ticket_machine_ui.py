@@ -15,6 +15,8 @@ def get_input(list_of_options, message, messages):
             user_input = int(input(messages[message] + ' '))
         except ValueError:
             user_input = None
+        print('')
+    print('')
     return list_of_options[user_input]
 
 
@@ -32,10 +34,10 @@ def ui():
     messages = change_language('ENG')
     available_languages = ['ENG', 'PL']
     language = get_input(available_languages, 'choose_language', messages)
-    # main_menu_options = [
-    #     'buy_short_term_ticket',
-    #     'buy_long_term_ticket',
-    #     'other_long_term_ticket'
-    #     ]
+    main_menu_options = [
+        'buy_short_term_ticket',
+        'buy_long_term_ticket',
+        'other_long_term_ticket'
+        ]
+    main_menu_option = get_input(main_menu_options, 'choose_action', messages)
 
-ui()

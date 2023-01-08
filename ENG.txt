@@ -3,3 +3,6 @@ choose_language,Choose a language
 ENG,English
 PL,Polish
 choose_action,Choose an action
+buy_short_term_ticket,Buy short term ticket
+buy_long_term_ticket,Buy long term ticket
+other_long_term_ticket,Operation on previous long term ticket
