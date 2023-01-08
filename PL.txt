@@ -1,0 +1,5 @@
+code_name, ui_message
+choose_language, Wybierz jezyk
+ENG, Angielski
+PL, Polski
+choose_action, Wybierz akcje

@@ -1,23 +1,5 @@
-# Dictionary of message codes to ui messages in different languages
-messages = {
-    'choose_language': {
-        'ENG': 'Choose a language',
-        'PL': 'Wybierz jezyk'
-    },
-    'choose_action': {
-        'ENG': 'Choose an action',
-        'PL': 'Wybierz akcje'
-    },
-    'ENG': {
-        'ENG': 'English',
-        'PL': 'Angielski'
-    },
-    'PL': {
-        'ENG': 'English',
-        'PL': 'Angielski'
-    },
 
-}
+import csv
 
 
 def print_options(list_of_options):
@@ -25,10 +7,10 @@ def print_options(list_of_options):
         print(index, option)
 
 
-def get_input(list_of_options, message):
+def get_input(list_of_options, message, messages):
     user_input = None
     while user_input not in range(len(list_of_options)):
-        print_options(list_of_options)
+        print_options([messages[option] for option in list_of_options])
         try:
             user_input = int(input(message))
         except ValueError:
@@ -36,11 +18,21 @@ def get_input(list_of_options, message):
     return list_of_options[user_input]
 
 
-def ui(messages):
+def change_language(language):
+    messages = {}
+    with open(f'{language}.txt', 'r') as file_handle:
+        reader = csv.DictReader(file_handle)
+        for row in reader:
+            messages[row['code_name']] = row['ui_message']
+    return messages
+
+
+def ui():
+    messages = change_language('ENG')
     available_languages = ['ENG', 'PL']
-    language = get_input(available_languages, 'choose_language')
-    main_menu_options = [
-        'buy_short_term_ticket',
-        'buy_long_term_ticket',
-        'other_long_term_ticket'
-        ]
+    language = get_input(available_languages, 'choose_language', messages)
+    # main_menu_options = [
+    #     'buy_short_term_ticket',
+    #     'buy_long_term_ticket',
+    #     'other_long_term_ticket'
+    #     ]
