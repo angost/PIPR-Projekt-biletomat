@@ -29,15 +29,29 @@ def change_language(language):
     return messages
 
 
-def ui():
+def buy_short_term_ticket_ui():
     pass
+
+
+def buy_long_term_ticket_ui():
+    pass
+
+
+def other_long_term_ticket_ui():
+    pass
+
+
+def ui():
     messages = change_language('ENG')
     available_languages = ['ENG', 'PL']
     language = get_input(available_languages, 'choose_language', messages)
-    main_menu_options = [
-        'buy_short_term_ticket',
-        'buy_long_term_ticket',
-        'other_long_term_ticket'
-        ]
-    main_menu_option = get_input(main_menu_options, 'choose_action', messages)
+    messages = change_language(language)
+    main_menu_options = {
+        'buy_short_term_ticket': buy_short_term_ticket_ui,
+        'buy_long_term_ticket': buy_long_term_ticket_ui,
+        'other_long_term_ticket': other_long_term_ticket_ui
+    }
+    main_menu_option = get_input(list(main_menu_options.keys()), 'choose_action', messages)
+    main_menu_options[main_menu_option]()
+    pass
 
