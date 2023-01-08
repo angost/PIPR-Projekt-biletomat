@@ -1,8 +1,8 @@
 code_name,ui_message
-choose_language,Wybierz język
+choose_language,Wybierz jezyk
 ENG,Angielski
 PL,Polski
-choose_action,Wybierz akcję
-buy_short_term_ticket,Kup bilet krótkoterminowy
-buy_long_term_ticket,Kup bilet długoterminowy
-other_long_term_ticket,Operacja na istniejącym bilecie długoterminowym
+choose_action,Wybierz akcje
+buy_short_term_ticket,Kup bilet krotkoterminowy
+buy_long_term_ticket,Kup bilet dlugoterminowy
+other_long_term_ticket,Operacja na istniejacym bilecie dlugoterminowym
