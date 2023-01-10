@@ -1,5 +1,7 @@
 
 import csv
+from datetime import date, timedelta
+
 
 class Ticket:
     def __init__(self, id, data):
@@ -18,5 +20,17 @@ class Ticket:
             writer.writerow(file_data)
 
 
-class Long_Term_Ticket(Ticket):
-    pass
+class Long_Term_Time_Ticket(Ticket):
+    def __init__(self, id, data):
+        super().__init__(id, data)
+
+    def check_status(self):
+        current_date = date.today()
+        date_of_purchase = date.fromisoformat(self.data.date_of_purchase)
+        duration = timedelta(days=int(self.data.duration))
+        return max(duration - (current_date - date_of_purchase), 0)
+
+
+class Long_Term_Prepaid_Ticket(Ticket):
+    def __init__(self, id, data):
+        super().__init__(id, data)
