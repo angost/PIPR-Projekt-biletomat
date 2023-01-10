@@ -32,14 +32,15 @@ class Long_Term_Time_Ticket(Ticket):
         return max(days_left, timedelta(days=0))
 
     def reload_ticket(self, added_duration):
+        days_left = self.check_status()
+        new_date_of_purchase = date.today().isoformat()
+        self.data['date_of_purchase'] = new_date_of_purchase
         # Extend ticket
-        if self.check_status() > timedelta(days=0):
-            new_duration = self.data['duration'] + added_duration
+        if days_left > timedelta(days=0):
+            new_duration = int(days_left.days) + added_duration
             self.data['duration'] = new_duration
         # Reload expired ticket
         else:
-            new_date_of_purchase = date.today().isoformat()
-            self.data['date_of_purchase'] = new_date_of_purchase
             self.data['duration'] = added_duration
 
         self.save_to_file()
