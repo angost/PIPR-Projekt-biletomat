@@ -26,9 +26,10 @@ class Long_Term_Time_Ticket(Ticket):
 
     def check_status(self):
         current_date = date.today()
-        date_of_purchase = date.fromisoformat(self.data.date_of_purchase)
-        duration = timedelta(days=int(self.data.duration))
-        return max(duration - (current_date - date_of_purchase), 0)
+        date_of_purchase = date.fromisoformat(self.data['date_of_purchase'])
+        duration = timedelta(days=int(self.data['duration']))
+        days_left = duration - (current_date - date_of_purchase)
+        return max(days_left, timedelta(days=0))
 
 
 class Long_Term_Prepaid_Ticket(Ticket):
