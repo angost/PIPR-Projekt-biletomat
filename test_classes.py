@@ -59,3 +59,37 @@ def test_check_status_Long_Term_Time_Ticket_expired():
 
     days_left = ticket1.check_status()
     assert days_left == timedelta(days=0)
+
+
+def test_reload_Long_Term_Time_Ticket_extend():
+    today = date.today()
+    date_of_purchase = today - timedelta(days=1)
+    date_of_purchase = date_of_purchase.isoformat()
+    data = {'duration': 30, 'date_of_purchase': date_of_purchase, 'price': 49, 'discount_type': 'discount'}
+    ticket1 = Long_Term_Time_Ticket(1, data)
+
+    assert ticket1.data['duration'] == 30
+    assert ticket1.data['date_of_purchase'] == date_of_purchase
+    ticket1.reload_ticket(30)
+    assert ticket1.data['duration'] == 60
+    assert ticket1.data['date_of_purchase'] == date_of_purchase
+
+
+def test_reload_Long_Term_Time_Ticket_reload_expired():
+    today = date.today()
+    date_of_purchase = today - timedelta(days=31)
+    date_of_purchase = date_of_purchase.isoformat()
+    data = {'duration': 30, 'date_of_purchase': date_of_purchase, 'price': 49, 'discount_type': 'discount'}
+    ticket1 = Long_Term_Time_Ticket(1, data)
+
+    assert ticket1.data['duration'] == 30
+    assert ticket1.data['date_of_purchase'] == date_of_purchase
+    assert ticket1.check_status() == timedelta(days=0)
+    ticket1.reload_ticket(30)
+    assert ticket1.data['duration'] == 30
+    assert ticket1.data['date_of_purchase'] == today.isoformat()
+    assert ticket1.check_status() == timedelta(days=30)
+
+
+def test_reload_Long_Term_Time_Ticket_does_not_exist():
+    pass

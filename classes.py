@@ -31,7 +31,23 @@ class Long_Term_Time_Ticket(Ticket):
         days_left = duration - (current_date - date_of_purchase)
         return max(days_left, timedelta(days=0))
 
+    def reload_ticket(self, added_duration):
+        # Extend ticket
+        if self.check_status() > timedelta(days=0):
+            new_duration = self.data['duration'] + added_duration
+            self.data['duration'] = new_duration
+        # Reload expired ticket
+        else:
+            new_date_of_purchase = date.today().isoformat()
+            self.data['date_of_purchase'] = new_date_of_purchase
+            self.data['duration'] = added_duration
+
+        self.save_to_file()
+
 
 class Long_Term_Prepaid_Ticket(Ticket):
     def __init__(self, id, data):
         super().__init__(id, data)
+
+    # @TODO status checking for prepaid ticket
+    # @TODO reload ticket
