@@ -7,6 +7,7 @@ class Ticket:
     def __init__(self, id, data):
         self.id = id
         self.data = data
+        self.save_to_file()
 
     def save_to_file(self):
         with open(f'{self.id}.txt', 'w') as file_handle:
