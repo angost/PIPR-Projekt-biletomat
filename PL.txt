@@ -3,6 +3,13 @@ choose_language,Wybierz jezyk
 ENG,Angielski
 PL,Polski
 choose_action,Wybierz akcje
+main_menu_buy_a_ticket,Kup bilet
+main_menu_check_status,Sprawdz status swojego biletu
+main_menu_recharge_ticket,Naladuj/Przedluz waznosc swojego biletu
 buy_short_term_ticket,Kup bilet krotkoterminowy
 buy_long_term_ticket,Kup bilet dlugoterminowy
-other_long_term_ticket,Operacja na istniejacym bilecie dlugoterminowym
+assign_to_prepaid,Skorzystaj z biletu prepaid
+check_status,Sprawdz waznosc biletu
+check_balance,Sprawdz stan biletu prepaid
+recharge_time_ticket,Przedluz bilet dlugoterminowy
+recharge_prepaid_ticket,Doladuj bilet prepaid

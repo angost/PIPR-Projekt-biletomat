@@ -3,6 +3,13 @@ choose_language,Choose a language
 ENG,English
 PL,Polish
 choose_action,Choose an action
+main_menu_buy_a_ticket,Buy a ticket
+main_menu_check_status,Check your ticket's status
+main_menu_recharge_ticket,Recharge/Extend your ticket
 buy_short_term_ticket,Buy short term ticket
 buy_long_term_ticket,Buy long term ticket
-other_long_term_ticket,Operation on previous long term ticket
+assign_to_prepaid,Use your prepaid ticket
+check_status,Check ticket status
+check_balance,Check prepaid ticket balance
+recharge_time_ticket,Recharge/Extend your long term ticket
+recharge_prepaid_ticket,Recharge your prepaid ticket
