@@ -127,3 +127,16 @@ def test_recharge_Long_Term_Prepaid_Ticket():
         reader2 = csv.DictReader(file_handle2)
         for row in reader2:
             assert float(row['balance']) == 25.0
+
+
+def test_use_prepaid_Long_Term_Prepaid_Ticket():
+    data = {'balance': 20.0, 'active_ticket': None}
+    ticket1 = Long_Term_Prepaid_Ticket(1, data)
+    assert ticket1.check_balance() == 20.0
+
+    ticket_to_asign_data = {'duration': 20, 'price': 1.7, 'discount_type': 'normal'}
+    ticket_to_asign = Ticket(0, ticket_to_asign_data)
+
+    ticket1.use_prepaid(ticket_to_asign, ticket_to_asign.data['price'])
+    assert ticket1.check_balance() == 20.0 - 1.7
+    assert ticket1.data['current_ticket'] == ticket_to_asign
