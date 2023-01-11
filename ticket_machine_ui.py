@@ -29,6 +29,7 @@ def change_language(language):
     return messages
 
 
+# @TODO create ui and logic ticket functions
 def buy_short_term_ticket_ui():
     pass
 
@@ -37,7 +38,23 @@ def buy_long_term_ticket_ui():
     pass
 
 
-def other_long_term_ticket_ui():
+def assign_to_prepaid_ui():
+    pass
+
+
+def check_status_ui():
+    pass
+
+
+def check_balance_ui():
+    pass
+
+
+def recharge_time_ticket_ui():
+    pass
+
+
+def recharge_prepaid_ticket_ui():
     pass
 
 
@@ -46,12 +63,48 @@ def ui():
     available_languages = ['ENG', 'PL']
     language = get_input(available_languages, 'choose_language', messages)
     messages = change_language(language)
-    main_menu_options = {
-        'buy_short_term_ticket': buy_short_term_ticket_ui,
-        'buy_long_term_ticket': buy_long_term_ticket_ui,
-        'other_long_term_ticket': other_long_term_ticket_ui
-    }
-    main_menu_option = get_input(list(main_menu_options.keys()), 'choose_action', messages)
-    main_menu_options[main_menu_option]()
-    pass
 
+    main_menu_options = [
+        'main_menu_buy_a_ticket',
+        'main_menu_check_status',
+        'main_menu_recharge_ticket'
+    ]
+    main_menu_option = get_input(main_menu_options, 'choose_action', messages)
+
+    # BUY A TICKET
+    if main_menu_option == main_menu_options[0]:
+        main_menu_buy_a_ticket_options = {
+            'buy_short_term_ticket': buy_short_term_ticket_ui,
+            'buy_long_term_ticket': buy_long_term_ticket_ui,
+            'assign_to_prepaid': assign_to_prepaid_ui
+        }
+        main_menu_buy_a_ticket_option = get_input(
+            list(main_menu_buy_a_ticket_options.keys()),
+            'choose_action',
+            messages
+        )
+        main_menu_buy_a_ticket_options[main_menu_buy_a_ticket_option]()
+    # CHECK STATUS
+    elif main_menu_option == main_menu_options[1]:
+        main_menu_check_status_options = {
+            'check_status': check_status_ui,
+            'check_balance': check_balance_ui
+        }
+        main_menu_check_status_option = get_input(
+            list(main_menu_check_status_options.keys()),
+            'choose_action',
+            messages
+        )
+        main_menu_check_status_options[main_menu_check_status_option]()
+    # RECHARGE
+    elif main_menu_option == main_menu_options[2]:
+        main_menu_recharge_options = {
+            'recharge_time_ticket': recharge_time_ticket_ui,
+            'recharge_prepaid_ticket': recharge_prepaid_ticket_ui
+        }
+        main_menu_recharge_option = get_input(
+            list(main_menu_recharge_options.keys()),
+            'choose_action',
+            messages
+        )
+        main_menu_recharge_options[main_menu_recharge_option]()
