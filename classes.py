@@ -30,8 +30,8 @@ class Long_Term_Ticket():
         self.id = id
         self.date_of_purchase = date_of_purchase
         self.duration = duration
-        self.path = f'./ticket_database/long_term_tickets_data/{self.id}.txt'
-        if not Path(self.path).is_file():
+        self.path = f'./ticket_database/long_term_tickets/{self.id}'
+        if not Path(self.path + '.txt').is_file():
             self.save_to_file()
 
     def save_to_file(self):
@@ -41,7 +41,7 @@ class Long_Term_Ticket():
             'date_of_purchase': self.date_of_purchase,
             'duration': self.duration
         }]
-        write_to_csv(self.id, ticket_data, headers)
+        write_to_csv(self.path, ticket_data, headers)
 
     def check_status(self):
         current_date = date.today()
