@@ -12,6 +12,14 @@ def read_from_csv(file_name):
     return data
 
 
+def write_to_csv(file_name, data, headers):
+    with open(f'{file_name}.txt', 'w') as file_handle:
+        writer = csv.DictWriter(file_handle, headers)
+        writer.writeheader()
+        for item in data:
+            writer.writerow(item)
+
+
 def print_menu_options(list_of_options, messages):
     '''Converts raw options into readable options in given language'''
     for index, option in enumerate(list_of_options):

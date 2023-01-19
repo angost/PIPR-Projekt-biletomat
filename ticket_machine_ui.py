@@ -1,5 +1,4 @@
 
-import csv
 from input_output_functions import (
     read_from_csv,
     get_input
@@ -100,5 +99,3 @@ def ui():
             menu_options=list(main_menu_recharge_options.keys())
         )
         main_menu_recharge_options[main_menu_recharge_option]()
-
-ui()
