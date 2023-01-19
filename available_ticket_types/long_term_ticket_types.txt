@@ -1,0 +1,5 @@
+name,price
+30_day_reduced,55
+30_day_standard,110
+90_day_reduced,140
+90_day_standard,280
