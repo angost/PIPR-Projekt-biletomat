@@ -1,0 +1,7 @@
+name,price
+20_min_reduced,1.7
+20_min_standard,3.4
+75_min_reduced,2.2
+75_min_standard,4.4
+90_min_reduced,3.5
+90_min_standard,7
