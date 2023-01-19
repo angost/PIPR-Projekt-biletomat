@@ -1,8 +1,10 @@
 from pathlib import Path
+from datetime import date
 from input_output_functions import (
     read_from_csv,
     write_to_csv
 )
+from classes import Long_Term_Ticket
 
 
 def buy_short_term_ticket(ticket_to_buy):
@@ -37,5 +39,8 @@ def buy_long_term_ticket(ticket_to_buy):
     # Choose id
     with open(database_path + '/last_id.txt', 'r') as file_handle:
         new_id = int(file_handle.readline()) + 1
+    with open(database_path + '/last_id.txt', 'w') as file_handle:
+        file_handle.write(str(new_id))
     # Create Long_Term_Ticket instance
-
+    current_date = date.today()
+    Long_Term_Ticket(new_id, current_date, ticket_to_buy['duration'])
