@@ -13,3 +13,12 @@ check_status,Sprawdz waznosc biletu
 check_balance,Sprawdz stan biletu prepaid
 recharge_time_ticket,Przedluz bilet dlugoterminowy
 recharge_prepaid_ticket,Doladuj bilet prepaid
+ticket_type,Rodzaj biletu
+ticket_price,Cena (zl)
+ticket_value,Kwota (zl)
+20_min_reduced,Bilet 20-minutowy ulgowy
+20_min_standard,Bilet 20-minutowy normalny
+75_min_reduced,Bilet 75-minutowy ulgowy
+75_min_standard,Bilet 75-minutowy normalny
+90_min_reduced,Bilet 90-minutowy ulgowy
+90_min_standard,Bilet 90-minutowy normalny
