@@ -17,9 +17,13 @@ ticket_type,Ticket type
 ticket_price,Price (PLN)
 ticket_value,Value (PLN)
 choose_ticket_type,Choose ticket type
-20_min_reduced,Reduced-fare 20 minute ticket
-20_min_standard,Standard 20 minute ticket
-75_min_reduced,Reduced-fare 75 minute ticket
-75_min_standard,Standard 75 minute ticket
-90_min_reduced,Reduced-fare 90 minute ticket
-90_min_standard,Standard 90 minute ticket
+20_min_reduced,Reduced-fare 20-minute ticket
+20_min_standard,Standard 20-minute ticket
+75_min_reduced,Reduced-fare 75-minute ticket
+75_min_standard,Standard 75-minute ticket
+90_min_reduced,Reduced-fare 90-minute ticket
+90_min_standard,Standard 90-minute ticket
+30_day_reduced,Reduced-fare 30-day ticket
+30_day_standard,Standard 30-day ticket
+90_day_reduced,Reduced-fare 90-day ticket
+90_day_standard,Standard 90-day ticket

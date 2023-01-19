@@ -23,3 +23,7 @@ choose_ticket_type,Wybierz rodzaj biletu
 75_min_standard,Bilet 75-minutowy normalny
 90_min_reduced,Bilet 90-minutowy ulgowy
 90_min_standard,Bilet 90-minutowy normalny
+30_day_reduced,Bilet 30-dniowy ulgowy
+30_day_standard,Bilet 30-dniowy normalny
+90_day_reduced,Bilet 90-dniowy ulgowy
+90_day_standard,Bilet 90-dniowy normalny
