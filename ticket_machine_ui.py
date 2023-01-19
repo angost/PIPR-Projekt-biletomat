@@ -11,10 +11,9 @@ from ticket_operations import (
 
 def change_language(language):
     messages = {}
-    with open(f'./languages/{language}.txt', 'r') as file_handle:
-        reader = csv.DictReader(file_handle)
-        for row in reader:
-            messages[row['code_name']] = row['ui_message']
+    data = read_from_csv(f'./languages/{language}')
+    for row in data:
+        messages[row['code_name']] = row['ui_message']
     return messages
 
 
