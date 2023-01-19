@@ -4,7 +4,8 @@ from input_output_functions import (
     get_input
 )
 from ticket_operations import (
-    buy_short_term_ticket
+    buy_short_term_ticket,
+    buy_long_term_ticket
 )
 
 
@@ -21,13 +22,21 @@ def buy_short_term_ticket_ui(messages):
     short_term_ticket_types = read_from_csv(ticket_types_file)
     selected_type = get_input(
         'choose_ticket_type',
-        messages, ticket_data=short_term_ticket_types
-        )
+        messages,
+        ticket_data=short_term_ticket_types
+    )
     buy_short_term_ticket(selected_type)
 
 
-def buy_long_term_ticket_ui():
-    pass
+def buy_long_term_ticket_ui(messages):
+    ticket_types_file = './available_ticket_types/long_term_ticket_types'
+    long_term_ticket_types = read_from_csv(ticket_types_file)
+    selected_type = get_input(
+        'choose_ticket_type',
+        messages,
+        ticket_data=long_term_ticket_types
+    )
+    buy_long_term_ticket(selected_type)
 
 
 def assign_to_prepaid_ui():

@@ -30,3 +30,12 @@ def buy_short_term_ticket(ticket_to_buy):
     # Updating the database
         headers = ['ticket_type', 'number_sold']
         write_to_csv(file_name, tickets_data_from_database, headers)
+
+
+def buy_long_term_ticket(ticket_to_buy):
+    database_path = './ticket_database/long_term_tickets'
+    # Choose id
+    with open(database_path + '/last_id.txt', 'r') as file_handle:
+        new_id = int(file_handle.readline()) + 1
+    # Create Long_Term_Ticket instance
+
