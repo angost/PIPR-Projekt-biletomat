@@ -44,3 +44,14 @@ def buy_long_term_ticket(ticket_to_buy):
     # Create Long_Term_Ticket instance
     current_date = date.today()
     Long_Term_Ticket(new_id, current_date, ticket_to_buy['duration'])
+
+
+def check_long_term_ticket_status(id):
+    path = './ticket_database/long_term_tickets'
+    ticket_data = read_from_csv(f'{path}/{id}')[0]
+    ticket = Long_Term_Ticket(
+        ticket_data['id'],
+        ticket_data['date_of_purchase'],
+        ticket_data['duration']
+    )
+    return ticket.check_status()

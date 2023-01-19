@@ -48,7 +48,7 @@ class Long_Term_Ticket():
         date_of_purchase = date.fromisoformat(self.date_of_purchase)
         duration = timedelta(days=int(self.duration))
         days_left = duration - (current_date - date_of_purchase)
-        return max(days_left, timedelta(days=0))
+        return max(days_left, timedelta(days=0)).days
 
     # def recharge_ticket(self, added_duration):
     #     days_left = self.check_status()

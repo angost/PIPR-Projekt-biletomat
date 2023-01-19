@@ -1,11 +1,13 @@
 
 from input_output_functions import (
     read_from_csv,
-    get_input
+    get_input,
+    get_input_id
 )
 from ticket_operations import (
     buy_short_term_ticket,
-    buy_long_term_ticket
+    buy_long_term_ticket,
+    check_long_term_ticket_status
 )
 
 
@@ -39,11 +41,14 @@ def buy_long_term_ticket_ui(messages):
     buy_long_term_ticket(selected_type)
 
 
+def check_long_term_ticket_status_ui(messages):
+    path = './ticket_database/long_term_tickets'
+    valid_id = get_input_id('enter_id', messages, path)
+    days_left = check_long_term_ticket_status(valid_id)
+    print(days_left)
+
+
 def assign_to_prepaid_ui():
-    pass
-
-
-def check_status_ui():
     pass
 
 
@@ -95,7 +100,7 @@ def ui():
     # CHECK STATUS
     elif main_menu_option == main_menu_options[1]:
         main_menu_check_status_options = {
-            'check_status': check_status_ui,
+            'check_status': check_long_term_ticket_status_ui,
             'check_balance': check_balance_ui
         }
 
@@ -104,7 +109,7 @@ def ui():
             messages,
             menu_options=list(main_menu_check_status_options.keys())
         )
-        main_menu_check_status_options[main_menu_check_status_option]()
+        main_menu_check_status_options[main_menu_check_status_option](messages)
     # RECHARGE
     elif main_menu_option == main_menu_options[2]:
         main_menu_recharge_options = {

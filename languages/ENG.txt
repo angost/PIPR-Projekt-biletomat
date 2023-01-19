@@ -27,3 +27,4 @@ choose_ticket_type,Choose ticket type
 30_day_standard,Standard 30-day ticket
 90_day_reduced,Reduced-fare 90-day ticket
 90_day_standard,Standard 90-day ticket
+enter_id,Enter ticket id

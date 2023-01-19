@@ -1,6 +1,7 @@
 
 import csv
 from tabulate import tabulate
+from pathlib import Path
 
 
 def read_from_csv(file_name):
@@ -78,3 +79,22 @@ def get_input(message, messages, menu_options=None, ticket_data=None):
         print('')
     print('')
     return list_of_options[input_type][user_input]
+
+
+def get_input_id(message, messages, path):
+    user_input = None
+    id_exists = False
+    while not id_exists:
+        user_input = input(messages[message] + ' ')
+        try:
+            int(user_input)
+            if Path(f'{path}/{user_input}.txt').is_file():
+                id_exists = True
+            else:
+                user_input = None
+        except ValueError:
+            user_input = None
+
+        print('')
+    print('')
+    return user_input
