@@ -43,7 +43,13 @@ def print_ticket_data(list_of_options, messages):
             headers.append(messages['value'])
         options_data.append(option_data)
 
-    print(tabulate(options_data, headers=headers, showindex="always", tablefmt="simple_grid", floatfmt=".2f"))
+    print(tabulate(
+        options_data,
+        headers=headers,
+        showindex="always",
+        tablefmt="simple_grid",
+        floatfmt=".2f")
+    )
 
 
 def get_input(message, messages, menu_options=None, ticket_data=None):

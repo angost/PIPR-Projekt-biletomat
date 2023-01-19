@@ -17,8 +17,12 @@ def change_language(language):
 
 
 def buy_short_term_ticket_ui(messages):
-    short_term_ticket_types = read_from_csv('./available_ticket_types/short_term_ticket_types')
-    selected_type = get_input('choose_ticket_type', messages, ticket_data=short_term_ticket_types)
+    ticket_types_file = './available_ticket_types/short_term_ticket_types'
+    short_term_ticket_types = read_from_csv(ticket_types_file)
+    selected_type = get_input(
+        'choose_ticket_type',
+        messages, ticket_data=short_term_ticket_types
+        )
     buy_short_term_ticket(selected_type)
 
 
@@ -49,7 +53,10 @@ def recharge_prepaid_ticket_ui():
 def ui():
     messages = change_language('ENG')
     available_languages = ['ENG', 'PL']
-    language = get_input('choose_language', messages, menu_options=available_languages)
+    language = get_input(
+        'choose_language',
+        messages, menu_options=available_languages
+    )
     messages = change_language(language)
 
     main_menu_options = [
@@ -57,7 +64,10 @@ def ui():
         'main_menu_check_status',
         'main_menu_recharge_ticket'
     ]
-    main_menu_option = get_input('choose_action', messages, menu_options=main_menu_options)
+    main_menu_option = get_input(
+        'choose_action',
+        messages, menu_options=main_menu_options
+    )
 
     # BUY A TICKET
     if main_menu_option == main_menu_options[0]:
