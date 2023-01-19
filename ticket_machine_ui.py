@@ -44,8 +44,14 @@ def buy_long_term_ticket_ui(messages):
 def check_long_term_ticket_status_ui(messages):
     path = './ticket_database/long_term_tickets'
     valid_id = get_input_id('enter_id', messages, path)
-    days_left = check_long_term_ticket_status(valid_id)
-    print(days_left)
+    status_info = check_long_term_ticket_status(valid_id)
+    days_left = status_info['days_left']
+    expires = status_info['expires']
+    if days_left:
+        print(f'{messages["days_left"]}: {days_left}')
+        print(f'{messages["will_expire"]}: {expires}')
+    else:
+        print(f'{messages["ticket_expired"]}: {expires}')
 
 
 def assign_to_prepaid_ui():

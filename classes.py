@@ -2,7 +2,7 @@
 from datetime import date, timedelta
 from pathlib import Path
 from input_output_functions import (
-    read_from_csv,
+    # read_from_csv,
     write_to_csv
 )
 
@@ -48,7 +48,10 @@ class Long_Term_Ticket():
         date_of_purchase = date.fromisoformat(self.date_of_purchase)
         duration = timedelta(days=int(self.duration))
         days_left = duration - (current_date - date_of_purchase)
-        return max(days_left, timedelta(days=0)).days
+        status_info = {
+            'days_left': max(days_left, timedelta(days=0)).days,
+            'expires': (date_of_purchase + duration).isoformat()}
+        return status_info
 
     # def recharge_ticket(self, added_duration):
     #     days_left = self.check_status()

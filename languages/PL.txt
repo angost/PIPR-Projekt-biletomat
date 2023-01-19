@@ -28,3 +28,6 @@ choose_ticket_type,Wybierz rodzaj biletu
 90_day_reduced,Bilet 90-dniowy ulgowy
 90_day_standard,Bilet 90-dniowy normalny
 enter_id,Podaj id biletu
+days_left,Pozostalo dni
+will_expire,Bilet wygasnie
+ticket_expired,Bilet wygasl
