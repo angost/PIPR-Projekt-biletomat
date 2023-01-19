@@ -16,6 +16,7 @@ recharge_prepaid_ticket,Doladuj bilet prepaid
 ticket_type,Rodzaj biletu
 ticket_price,Cena (zl)
 ticket_value,Kwota (zl)
+choose_ticket_type,Wybierz rodzaj biletu
 20_min_reduced,Bilet 20-minutowy ulgowy
 20_min_standard,Bilet 20-minutowy normalny
 75_min_reduced,Bilet 75-minutowy ulgowy
