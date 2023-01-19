@@ -63,7 +63,7 @@ class Long_Term_Prepaid_Ticket(Ticket):
         return 1
 
     def use_prepaid(self, ticket, price):
-        self.data['current_ticket'] = ticket
+        self.data['assigned_ticket'] = ticket
         self.data['balance'] = self.check_balance() - price
         self.save_to_file()
         return 1
