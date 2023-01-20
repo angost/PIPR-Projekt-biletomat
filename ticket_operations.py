@@ -83,5 +83,9 @@ def buy_prepaid_ticket(ticket_to_buy):
     Long_Term_Ticket(id, ticket_to_buy['value'])
 
 
+def check_prepaid_balance():
+    pass
+
+
 def use_prepaid_ticket():
     pass

@@ -11,6 +11,7 @@ from ticket_operations import (
     prolong_long_term_ticket,
     can_ticket_be_prolonged,
     buy_prepaid_ticket,
+    check_prepaid_balance,
     use_prepaid_ticket
 )
 
@@ -90,8 +91,11 @@ def buy_prepaid_ticket_ui(messages):
     print(messages['ticket_bought'])
 
 
-def check_prepaid_balance_ui():
-    pass
+def check_prepaid_balance_ui(messages):
+    path = './ticket_database/prepaid_tickets'
+    valid_id = get_input_id('enter_id', messages, path)
+    balance = check_prepaid_balance(valid_id)
+    print(f'{messages["show_balance"]}:{balance} ({messages["currency"]})')
 
 
 def recharge_prepaid_ticket_ui():

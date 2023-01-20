@@ -37,3 +37,5 @@ cannot_prolong,Za wczesnie zeby przedluzyc bilet
 ticket_bought,Zakupiono bilet
 buy_prepaid,Kup bilet prepaid
 choose_value,Wybierz kwote
+show_balance,Pozostale srodki
+currency,zl
