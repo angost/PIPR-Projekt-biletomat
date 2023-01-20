@@ -69,8 +69,8 @@ def can_ticket_be_prolonged(id):
     days_left_to_allow_prolonging = 7
     status_info = check_long_term_ticket_status(id)
     if status_info['days_left'] <= days_left_to_allow_prolonging:
-        return True
-    return False
+        return [True, days_left_to_allow_prolonging]
+    return [False, days_left_to_allow_prolonging]
 
 
 def prolong_long_term_ticket(id, added_ticket):

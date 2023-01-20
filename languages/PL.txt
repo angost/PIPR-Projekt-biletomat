@@ -2,15 +2,16 @@ code_name,ui_message
 choose_language,Wybierz jezyk
 ENG,Angielski
 PL,Polski
+menu,MAIN MENU
 choose_action,Wybierz akcje
 main_menu_buy_a_ticket,Kup bilet
 main_menu_check_status,Sprawdz status swojego biletu
-main_menu_recharge_ticket,Naladuj/Przedluz waznosc swojego biletu
+main_menu_recharge_ticket,Doladuj/Przedluz waznosc swojego biletu
 buy_short_term_ticket,Kup bilet krotkoterminowy
 buy_long_term_ticket,Kup bilet dlugoterminowy
 use_prepaid,Skorzystaj z biletu prepaid
-check_status,Sprawdz waznosc biletu
-check_balance,Sprawdz stan biletu prepaid
+check_status,Sprawdz status biletu dlugoterminowego
+check_balance,Sprawdz srodki na bilecie prepaid
 recharge_time_ticket,Przedluz bilet dlugoterminowy
 recharge_prepaid_ticket,Doladuj bilet prepaid
 ticket_type,Rodzaj biletu
@@ -33,13 +34,12 @@ will_expire,Bilet wygasnie
 ticket_expired,Bilet wygasl
 prolong_long_term_ticket,Doladuj bilet dlugoterminowy
 ticket_prolonged,Bilet zostal przedluzony
-cannot_prolong,Za wczesnie zeby przedluzyc bilet
+cannot_prolong,Za wczesnie zeby przedluzyc bilet. Bilet mozna przedluzyc gdy zostalo dni
 ticket_bought,Zakupiono bilet
 buy_prepaid,Kup bilet prepaid
 choose_value,Wybierz kwote
 show_balance,Pozostale srodki
 currency,zl
 recharged,Doladowano bilet
-new_balance,Aktualne srodki
 balance_too_low,Za malo srodkow aby kupic ten bilet
 show_id,Id twojego biletu to

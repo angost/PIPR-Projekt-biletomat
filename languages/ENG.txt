@@ -2,6 +2,7 @@ code_name,ui_message
 choose_language,Choose a language
 ENG,English
 PL,Polish
+menu,MENU GLOWNE
 choose_action,Choose an action
 main_menu_buy_a_ticket,Buy a ticket
 main_menu_check_status,Check your ticket's status
@@ -9,7 +10,7 @@ main_menu_recharge_ticket,Recharge/Extend your ticket
 buy_short_term_ticket,Buy short term ticket
 buy_long_term_ticket,Buy long term ticket
 use_prepaid,Use your prepaid ticket
-check_status,Check ticket status
+check_status,Check long-term ticket status
 check_balance,Check prepaid ticket balance
 recharge_time_ticket,Recharge/Extend your long term ticket
 recharge_prepaid_ticket,Recharge your prepaid ticket
@@ -33,13 +34,12 @@ will_expire,Ticket will expire on
 ticket_expired,Ticket has expired on
 prolong_long_term_ticket,Prolong long-term ticket
 ticket_prolonged,Your ticket was prolonged
-cannot_prolong,Too soon to prolong your ticket
+cannot_prolong,Too soon to prolong your ticket. Ticket can be prolonged if days left is
 ticket_bought,Ticket bought successfully
 buy_prepaid,Buy prepaid ticket
 choose_value,Choose ticket's value
 show_balance,Balance
 currency,PLN
 recharged,Ticket recharged successfully
-new_balance,Current balance
 balance_too_low,Insufficient funds to buy this ticket
 show_id,Your ticket's id is

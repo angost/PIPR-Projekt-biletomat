@@ -78,13 +78,17 @@ def prolong_long_term_ticket_ui(messages):
     # Getting user's ticket
     path = './ticket_database/long_term_tickets'
     valid_id = get_input_id('enter_id', messages, path)
-    if can_ticket_be_prolonged(valid_id):
+    allow_prolonging = can_ticket_be_prolonged(valid_id)
+    if allow_prolonging[0]:
         # Choosing a ticket to prolong user's ticket with
         selected_type = choose_long_term_ticket(messages)
         prolong_long_term_ticket(valid_id, selected_type)
         print(messages['ticket_prolonged'])
+        new_status = check_long_term_ticket_status(valid_id)['days_left']
+        print(f'{messages["days_left"]}: {new_status}')
+
     else:
-        print(messages['cannot_prolong'])
+        print(f'{messages["cannot_prolong"]}: {allow_prolonging[1]}')
 
 
 def choose_prepaid_ticket(messages):
@@ -121,7 +125,9 @@ def recharge_prepaid_ticket_ui(messages):
     recharge_prepaid_ticket(valid_id, selected_type)
     print(messages['recharged'])
     new_balance = check_prepaid_balance(valid_id)
-    print(f'{messages["new_balance"]}: {new_balance} ({messages["currency"]})')
+    print(
+        f'{messages["show_balance"]}: {new_balance} ({messages["currency"]})'
+    )
 
 
 def use_prepaid_ticket_ui(messages):
@@ -141,8 +147,13 @@ def use_prepaid_ticket_ui(messages):
         print(messages['balance_too_low'])
 
 
-def ui(messages):
+def print_current_menu_option(text, messages):
+    print(messages[text].upper())
 
+
+def ui(messages):
+    print('')
+    print_current_menu_option('menu', messages)
     main_menu_options = [
         'main_menu_buy_a_ticket',
         'main_menu_check_status',
@@ -150,9 +161,10 @@ def ui(messages):
     ]
     main_menu_option = get_input(
         'choose_action',
-        messages, menu_options=main_menu_options
+        messages,
+        menu_options=main_menu_options
     )
-
+    print_current_menu_option(main_menu_option, messages)
     # BUY A TICKET
     if main_menu_option == main_menu_options[0]:
         main_menu_buy_a_ticket_options = {
@@ -167,6 +179,8 @@ def ui(messages):
             messages,
             menu_options=list(main_menu_buy_a_ticket_options.keys())
         )
+        print_current_menu_option(main_menu_buy_a_ticket_option, messages)
+
         main_menu_buy_a_ticket_options[main_menu_buy_a_ticket_option](messages)
     # CHECK STATUS
     elif main_menu_option == main_menu_options[1]:
@@ -180,6 +194,8 @@ def ui(messages):
             messages,
             menu_options=list(main_menu_check_status_options.keys())
         )
+        print_current_menu_option(main_menu_check_status_option, messages)
+
         main_menu_check_status_options[main_menu_check_status_option](messages)
     # RECHARGE
     elif main_menu_option == main_menu_options[2]:
@@ -193,6 +209,8 @@ def ui(messages):
             messages,
             menu_options=list(main_menu_recharge_options.keys())
         )
+        print_current_menu_option(main_menu_recharge_option, messages)
+
         main_menu_recharge_options[main_menu_recharge_option](messages)
 
 
