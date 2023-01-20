@@ -2,13 +2,18 @@
 from datetime import date, timedelta
 from pathlib import Path
 from input_output_functions import (
-    # read_from_csv,
     write_to_csv
 )
 
 
 class Long_Term_Ticket():
-    def __init__(self, id: int, date_of_purchase: str, duration: int, folder_path: str):
+    def __init__(
+        self,
+        id: int,
+        date_of_purchase: str,
+        duration: int,
+        folder_path: str
+    ):
         """
         Creates instance of Long_Term_Ticket object.
         Creates a file with its data.
