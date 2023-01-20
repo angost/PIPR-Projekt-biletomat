@@ -7,6 +7,7 @@ choose_action,Wybierz akcje
 main_menu_buy_a_ticket,Kup bilet
 main_menu_check_status,Sprawdz status swojego biletu
 main_menu_recharge_ticket,Doladuj/Przedluz waznosc swojego biletu
+main_menu_change_language,Zmien jezyk
 buy_short_term_ticket,Kup bilet krotkoterminowy
 buy_long_term_ticket,Kup bilet dlugoterminowy
 use_prepaid,Skorzystaj z biletu prepaid

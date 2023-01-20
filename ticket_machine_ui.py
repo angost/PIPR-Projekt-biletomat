@@ -26,6 +26,16 @@ def change_language(language):
     return messages
 
 
+def change_language_ui(messages):
+    available_languages = ['ENG', 'PL']
+    language = get_input(
+        'choose_language',
+        messages,
+        menu_options=available_languages
+    )
+    return change_language(language)
+
+
 def choose_short_term_ticket(messages):
     ticket_types_file = './available_ticket_types/short_term_ticket_types'
     short_term_ticket_types = read_from_csv(ticket_types_file)
@@ -157,7 +167,8 @@ def ui(messages):
     main_menu_options = [
         'main_menu_buy_a_ticket',
         'main_menu_check_status',
-        'main_menu_recharge_ticket'
+        'main_menu_recharge_ticket',
+        'main_menu_change_language'
     ]
     main_menu_option = get_input(
         'choose_action',
@@ -212,17 +223,15 @@ def ui(messages):
         print_current_menu_option(main_menu_recharge_option, messages)
 
         main_menu_recharge_options[main_menu_recharge_option](messages)
+    # CHANGE LANGUAGE
+    elif main_menu_option == main_menu_options[3]:
+        messages = change_language_ui(messages)
 
 
 def main():
     clear_screen()
     messages = change_language('ENG')
-    available_languages = ['ENG', 'PL']
-    language = get_input(
-        'choose_language',
-        messages, menu_options=available_languages
-    )
-    messages = change_language(language)
+    messages = change_language_ui(messages)
     while True:
         try:
             ui(messages)

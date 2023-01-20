@@ -7,6 +7,7 @@ choose_action,Choose an action
 main_menu_buy_a_ticket,Buy a ticket
 main_menu_check_status,Check your ticket's status
 main_menu_recharge_ticket,Recharge/Extend your ticket
+main_menu_change_language,Change language
 buy_short_term_ticket,Buy short term ticket
 buy_long_term_ticket,Buy long term ticket
 use_prepaid,Use your prepaid ticket
