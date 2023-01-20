@@ -8,7 +8,8 @@ from ticket_operations import (
     buy_short_term_ticket,
     buy_long_term_ticket,
     check_long_term_ticket_status,
-    prolong_long_term_ticket
+    prolong_long_term_ticket,
+    can_ticket_be_prolonged
 )
 
 
@@ -64,9 +65,13 @@ def prolong_long_term_ticket_ui(messages):
     # Getting user's ticket
     path = './ticket_database/long_term_tickets'
     valid_id = get_input_id('enter_id', messages, path)
-    # Choosing a ticket to prolong user's ticket with
-    selected_type = choose_long_term_ticket(messages)
-    prolong_long_term_ticket(valid_id, selected_type)
+    if can_ticket_be_prolonged(valid_id):
+        # Choosing a ticket to prolong user's ticket with
+        selected_type = choose_long_term_ticket(messages)
+        prolong_long_term_ticket(valid_id, selected_type)
+        print(messages['ticket_prolonged'])
+    else:
+        print(messages['cannot_prolong'])
 
 
 def assign_to_prepaid_ui():
