@@ -8,7 +8,8 @@ from input_output_functions import (
 
 
 class Long_Term_Ticket():
-    def __init__(self, id, date_of_purchase, duration):
+    def __init__(self, id: int, date_of_purchase: str, duration: int):
+        """Creates Long_Term_Ticket object. Creates a file with its data."""
         self.id = id
         self.date_of_purchase = date_of_purchase
         self.duration = duration
@@ -17,6 +18,7 @@ class Long_Term_Ticket():
             self.save_to_file()
 
     def save_to_file(self):
+        """Saves ticket data to a file. Creates it or overrides its content"""
         headers = ['id', 'date_of_purchase', 'duration']
         ticket_data = [{
             'id': self.id,
