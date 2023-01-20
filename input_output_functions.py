@@ -21,10 +21,20 @@ def write_to_csv(file_name, data, headers):
             writer.writerow(item)
 
 
-def print_menu_options(list_of_options, messages):
+def print_list_menu_options(list_of_options, messages):
     '''Converts raw options into readable options in given language'''
     for index, option in enumerate(list_of_options):
         print(index, messages[option])
+
+
+def print_menu_options(list_of_options, messages):
+    '''Displays translated options in a table'''
+    options = [[messages[option]] for option in list_of_options]
+    print(tabulate(
+        options,
+        showindex="always",
+        tablefmt="rounded_outline"
+    ))
 
 
 def print_ticket_data(list_of_options, messages):
