@@ -8,17 +8,30 @@ from input_output_functions import (
 
 
 class Long_Term_Ticket():
-    def __init__(self, id: int, date_of_purchase: str, duration: int):
-        """Creates Long_Term_Ticket object. Creates a file with its data."""
+    def __init__(self, id: int, date_of_purchase: str, duration: int, folder_path: str):
+        """
+        Creates Long_Term_Ticket object. Creates a file with its data.
+        """
+        if id < 0:
+            raise Exception
+        if date.fromisoformat(date_of_purchase) > date.today():
+            raise Exception
+        if duration < 0:
+            raise Exception
+        if not Path(folder_path).is_dir():
+            raise Exception
+
         self.id = id
         self.date_of_purchase = date_of_purchase
         self.duration = duration
-        self.path = f'./ticket_database/long_term_tickets/{self.id}'
+        self.path = folder_path + f'/{self.id}'
         if not Path(self.path + '.txt').is_file():
             self.save_to_file()
 
     def save_to_file(self):
-        """Saves ticket data to a file. Creates it or overrides its content"""
+        """
+        Saves ticket data to a file. Creates it or overrides its content
+        """
         headers = ['id', 'date_of_purchase', 'duration']
         ticket_data = [{
             'id': self.id,
@@ -27,7 +40,11 @@ class Long_Term_Ticket():
         }]
         write_to_csv(self.path, ticket_data, headers)
 
-    def check_status(self):
+    def check_status(self) -> dict:
+        """
+        Returns dict{'days_left': int, 'expires': str}
+        with status info
+        """
         current_date = date.today()
         date_of_purchase = date.fromisoformat(self.date_of_purchase)
         duration = timedelta(days=int(self.duration))
@@ -37,14 +54,21 @@ class Long_Term_Ticket():
             'expires': (date_of_purchase + duration).isoformat()}
         return status_info
 
-    def prolong_ticket(self, added_duration):
+    def prolong_ticket(self, added_duration: int):
+        """
+        Changes ticket's duration
+        to added_duration + days_left if there are any.
+        Sets date_of_purchase to current day
+        """
+        if added_duration < 0:
+            raise Exception
         days_left = self.check_status()['days_left']
         new_date_of_purchase = date.today().isoformat()
         self.date_of_purchase = new_date_of_purchase
         # Extend ticket
         if days_left:
-            new_duration = int(days_left) + int(added_duration)
-            self.duration = str(new_duration)
+            new_duration = days_left + added_duration
+            self.duration = new_duration
         # Reload expired ticket
         else:
             self.duration = added_duration
@@ -53,7 +77,8 @@ class Long_Term_Ticket():
 
 
 class Prepaid_Ticket():
-    def __init__(self, id, balance):
+    def __init__(self, id: int, balance: float):
+        if 
         self.id = id
         self.balance = balance
         self.path = f'./ticket_database/prepaid_tickets/{self.id}'
