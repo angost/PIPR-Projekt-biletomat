@@ -10,7 +10,8 @@ from input_output_functions import (
 class Long_Term_Ticket():
     def __init__(self, id: int, date_of_purchase: str, duration: int, folder_path: str):
         """
-        Creates Long_Term_Ticket object. Creates a file with its data.
+        Creates instance of Long_Term_Ticket object.
+        Creates a file with its data.
         """
         if id < 0:
             raise Exception
@@ -77,15 +78,28 @@ class Long_Term_Ticket():
 
 
 class Prepaid_Ticket():
-    def __init__(self, id: int, balance: float):
-        if 
+    def __init__(self, id: int, balance: float, folder_path: str):
+        """
+        Creates instance of Prepaid_Ticket object.
+        Creates a file with its data.
+        """
+        if id < 0:
+            raise Exception
+        if balance < 0:
+            raise Exception
+        if not Path(folder_path).is_dir():
+            raise Exception
+
         self.id = id
         self.balance = balance
-        self.path = f'./ticket_database/prepaid_tickets/{self.id}'
+        self.path = folder_path + f'/{self.id}'
         if not Path(self.path + '.txt').is_file():
             self.save_to_file()
 
     def save_to_file(self):
+        """
+        Saves ticket data to a file. Creates it or overrides its content
+        """
         headers = ['id', 'balance']
         ticket_data = [{
             'id': self.id,
@@ -93,16 +107,30 @@ class Prepaid_Ticket():
         }]
         write_to_csv(self.path, ticket_data, headers)
 
-    def check_balance(self):
+    def check_balance(self) -> float:
+        """
+        Returns ticket's balance
+        """
         return self.balance
 
-    def recharge_ticket(self, value):
+    def recharge_ticket(self, value: float):
+        """
+        Adds value to ticket's balance
+        """
+        if value < 0:
+            raise Exception
         self.balance = round(self.check_balance() + value, 2)
         self.save_to_file()
 
-    def use_prepaid(self, price):
+    def use_prepaid(self, price: float) -> bool:
+        """
+        Decrements price from ticket's balance.
+        Returns False if balance is too low.
+        """
+        if price < 0:
+            raise Exception
         new_balance = round(self.check_balance() - price, 2)
-        if new_balance:
+        if new_balance >= 0.0:
             self.balance = new_balance
             self.save_to_file()
             return 1
