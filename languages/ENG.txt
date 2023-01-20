@@ -31,3 +31,4 @@ enter_id,Enter ticket id
 days_left,Days left
 will_expire,Ticket will expire on
 ticket_expired,Ticket has expired on
+prolong_long_term_ticket,Prolong long-term ticket

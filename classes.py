@@ -53,19 +53,19 @@ class Long_Term_Ticket():
             'expires': (date_of_purchase + duration).isoformat()}
         return status_info
 
-    # def recharge_ticket(self, added_duration):
-    #     days_left = self.check_status()
-    #     new_date_of_purchase = date.today().isoformat()
-    #     self.data['date_of_purchase'] = new_date_of_purchase
-    #     # Extend ticket
-    #     if days_left > timedelta(days=0):
-    #         new_duration = int(days_left.days) + added_duration
-    #         self.data['duration'] = new_duration
-    #     # Reload expired ticket
-    #     else:
-    #         self.data['duration'] = added_duration
+    def prolong_ticket(self, added_duration):
+        days_left = self.check_status()['days_left']
+        new_date_of_purchase = date.today().isoformat()
+        self.date_of_purchase = new_date_of_purchase
+        # Extend ticket
+        if days_left:
+            new_duration = int(days_left) + int(added_duration)
+            self.duration = str(new_duration)
+        # Reload expired ticket
+        else:
+            self.duration = added_duration
 
-    #     self.save_to_file()
+        self.save_to_file()
 
 
 # class Long_Term_Prepaid_Ticket(Ticket):

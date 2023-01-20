@@ -7,7 +7,8 @@ from input_output_functions import (
 from ticket_operations import (
     buy_short_term_ticket,
     buy_long_term_ticket,
-    check_long_term_ticket_status
+    check_long_term_ticket_status,
+    prolong_long_term_ticket
 )
 
 
@@ -30,7 +31,7 @@ def buy_short_term_ticket_ui(messages):
     buy_short_term_ticket(selected_type)
 
 
-def buy_long_term_ticket_ui(messages):
+def choose_long_term_ticket(messages):
     ticket_types_file = './available_ticket_types/long_term_ticket_types'
     long_term_ticket_types = read_from_csv(ticket_types_file)
     selected_type = get_input(
@@ -38,6 +39,11 @@ def buy_long_term_ticket_ui(messages):
         messages,
         ticket_data=long_term_ticket_types
     )
+    return selected_type
+
+
+def buy_long_term_ticket_ui(messages):
+    selected_type = choose_long_term_ticket(messages)
     buy_long_term_ticket(selected_type)
 
 
@@ -54,15 +60,20 @@ def check_long_term_ticket_status_ui(messages):
         print(f'{messages["ticket_expired"]}: {expires}')
 
 
+def prolong_long_term_ticket_ui(messages):
+    # Getting user's ticket
+    path = './ticket_database/long_term_tickets'
+    valid_id = get_input_id('enter_id', messages, path)
+    # Choosing a ticket to prolong user's ticket with
+    selected_type = choose_long_term_ticket(messages)
+    prolong_long_term_ticket(valid_id, selected_type)
+
+
 def assign_to_prepaid_ui():
     pass
 
 
 def check_balance_ui():
-    pass
-
-
-def recharge_time_ticket_ui():
     pass
 
 
@@ -119,7 +130,7 @@ def ui():
     # RECHARGE
     elif main_menu_option == main_menu_options[2]:
         main_menu_recharge_options = {
-            'recharge_time_ticket': recharge_time_ticket_ui,
+            'prolong_long_term_ticket': prolong_long_term_ticket_ui,
             'recharge_prepaid_ticket': recharge_prepaid_ticket_ui
         }
 
@@ -128,4 +139,4 @@ def ui():
             messages,
             menu_options=list(main_menu_recharge_options.keys())
         )
-        main_menu_recharge_options[main_menu_recharge_option]()
+        main_menu_recharge_options[main_menu_recharge_option](messages)

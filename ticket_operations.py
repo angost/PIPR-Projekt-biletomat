@@ -46,7 +46,7 @@ def buy_long_term_ticket(ticket_to_buy):
     Long_Term_Ticket(new_id, current_date, ticket_to_buy['duration'])
 
 
-def check_long_term_ticket_status(id):
+def get_ticket_from_database(id):
     path = './ticket_database/long_term_tickets'
     ticket_data = read_from_csv(f'{path}/{id}')[0]
     ticket = Long_Term_Ticket(
@@ -54,4 +54,15 @@ def check_long_term_ticket_status(id):
         ticket_data['date_of_purchase'],
         ticket_data['duration']
     )
+    return ticket
+
+
+def check_long_term_ticket_status(id):
+    ticket = get_ticket_from_database(id)
     return ticket.check_status()
+
+
+def prolong_long_term_ticket(id, added_ticket):
+    ticket = get_ticket_from_database(id)
+    added_duration = added_ticket['duration']
+    ticket.prolong_ticket(added_duration)

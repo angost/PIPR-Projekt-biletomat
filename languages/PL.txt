@@ -31,3 +31,4 @@ enter_id,Podaj id biletu
 days_left,Pozostalo dni
 will_expire,Bilet wygasnie
 ticket_expired,Bilet wygasl
+prolong_long_term_ticket,Doladuj bilet dlugoterminowy
