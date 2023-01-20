@@ -59,10 +59,10 @@ class Prepaid_Ticket():
             self.save_to_file()
 
     def save_to_file(self):
-        headers = ['id', 'value']
+        headers = ['id', 'balance']
         ticket_data = [{
             'id': self.id,
-            'value': self.value
+            'balance': self.balance
         }]
         write_to_csv(self.path, ticket_data, headers)
 

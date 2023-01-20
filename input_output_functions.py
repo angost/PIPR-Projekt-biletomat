@@ -51,7 +51,7 @@ def print_ticket_data(list_of_options, messages):
             headers.append(messages['ticket_price'])
         if 'value' in option.keys():
             option_data.append(option['value'])
-            headers.append(messages['value'])
+            headers.append(messages['ticket_value'])
         options_data.append(option_data)
 
     print(tabulate(

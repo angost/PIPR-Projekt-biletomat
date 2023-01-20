@@ -4,7 +4,7 @@ from input_output_functions import (
     read_from_csv,
     write_to_csv
 )
-from classes import Long_Term_Ticket
+from classes import Long_Term_Ticket, Prepaid_Ticket
 
 
 def buy_short_term_ticket(ticket_to_buy):
@@ -80,11 +80,22 @@ def prolong_long_term_ticket(id, added_ticket):
 
 def buy_prepaid_ticket(ticket_to_buy):
     id = choose_id('./ticket_database/prepaid_tickets')
-    Long_Term_Ticket(id, ticket_to_buy['value'])
+    Prepaid_Ticket(id, ticket_to_buy['value'])
 
 
-def check_prepaid_balance():
-    pass
+def get_prepaid_ticket_from_database(id):
+    path = './ticket_database/prepaid_tickets'
+    ticket_data = read_from_csv(f'{path}/{id}')[0]
+    ticket = Prepaid_Ticket(
+        ticket_data['id'],
+        ticket_data['balance']
+    )
+    return ticket
+
+
+def check_prepaid_balance(id):
+    ticket = get_prepaid_ticket_from_database(id)
+    return ticket.check_balance()
 
 
 def use_prepaid_ticket():

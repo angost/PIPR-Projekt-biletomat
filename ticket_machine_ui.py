@@ -95,7 +95,7 @@ def check_prepaid_balance_ui(messages):
     path = './ticket_database/prepaid_tickets'
     valid_id = get_input_id('enter_id', messages, path)
     balance = check_prepaid_balance(valid_id)
-    print(f'{messages["show_balance"]}:{balance} ({messages["currency"]})')
+    print(f'{messages["show_balance"]}: {balance} ({messages["currency"]})')
 
 
 def recharge_prepaid_ticket_ui():
