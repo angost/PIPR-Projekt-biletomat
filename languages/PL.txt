@@ -8,7 +8,7 @@ main_menu_check_status,Sprawdz status swojego biletu
 main_menu_recharge_ticket,Naladuj/Przedluz waznosc swojego biletu
 buy_short_term_ticket,Kup bilet krotkoterminowy
 buy_long_term_ticket,Kup bilet dlugoterminowy
-assign_to_prepaid,Skorzystaj z biletu prepaid
+use_prepaid,Skorzystaj z biletu prepaid
 check_status,Sprawdz waznosc biletu
 check_balance,Sprawdz stan biletu prepaid
 recharge_time_ticket,Przedluz bilet dlugoterminowy
@@ -35,3 +35,5 @@ prolong_long_term_ticket,Doladuj bilet dlugoterminowy
 ticket_prolonged,Bilet zostal przedluzony
 cannot_prolong,Za wczesnie zeby przedluzyc bilet
 ticket_bought,Zakupiono bilet
+buy_prepaid,Kup bilet prepaid
+choose_value,Wybierz kwote

@@ -34,14 +34,16 @@ def buy_short_term_ticket(ticket_to_buy):
         write_to_csv(file_name, tickets_data_from_database, headers)
 
 
-def buy_long_term_ticket(ticket_to_buy):
-    database_path = './ticket_database/long_term_tickets'
-    # Choose id
+def choose_id(database_path):
     with open(database_path + '/last_id.txt', 'r') as file_handle:
         new_id = int(file_handle.readline()) + 1
     with open(database_path + '/last_id.txt', 'w') as file_handle:
         file_handle.write(str(new_id))
-    # Create Long_Term_Ticket instance
+    return new_id
+
+
+def buy_long_term_ticket(ticket_to_buy):
+    id = choose_id('./ticket_database/long_term_tickets')
     current_date = date.today()
     Long_Term_Ticket(new_id, current_date, ticket_to_buy['duration'])
 
@@ -74,3 +76,12 @@ def prolong_long_term_ticket(id, added_ticket):
     ticket = get_ticket_from_database(id)
     added_duration = added_ticket['duration']
     ticket.prolong_ticket(added_duration)
+
+
+def buy_prepaid_ticket(ticket_to_buy):
+    id = choose_id('./ticket_database/prepaid_tickets')
+    Long_Term_Ticket(id, ticket_to_buy['value'])
+
+
+def use_prepaid_ticket():
+    pass

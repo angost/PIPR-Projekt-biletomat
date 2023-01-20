@@ -8,7 +8,7 @@ main_menu_check_status,Check your ticket's status
 main_menu_recharge_ticket,Recharge/Extend your ticket
 buy_short_term_ticket,Buy short term ticket
 buy_long_term_ticket,Buy long term ticket
-assign_to_prepaid,Use your prepaid ticket
+use_prepaid,Use your prepaid ticket
 check_status,Check ticket status
 check_balance,Check prepaid ticket balance
 recharge_time_ticket,Recharge/Extend your long term ticket
@@ -35,3 +35,5 @@ prolong_long_term_ticket,Prolong long-term ticket
 ticket_prolonged,Your ticket was prolonged
 cannot_prolong,Too soon to prolong your ticket
 ticket_bought,Ticket bought successfully
+buy_prepaid,Buy prepaid ticket
+choose_value,Choose ticket's value

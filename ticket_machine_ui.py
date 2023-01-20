@@ -9,7 +9,9 @@ from ticket_operations import (
     buy_long_term_ticket,
     check_long_term_ticket_status,
     prolong_long_term_ticket,
-    can_ticket_be_prolonged
+    can_ticket_be_prolonged,
+    buy_prepaid_ticket,
+    use_prepaid_ticket
 )
 
 
@@ -76,15 +78,27 @@ def prolong_long_term_ticket_ui(messages):
         print(messages['cannot_prolong'])
 
 
-def assign_to_prepaid_ui():
-    pass
+def buy_prepaid_ticket_ui(messages):
+    ticket_types_file = './available_ticket_types/prepaid_ticket_types'
+    prepaid_ticket_types = read_from_csv(ticket_types_file)
+    selected_type = get_input(
+        'choose_value',
+        messages,
+        ticket_data=prepaid_ticket_types
+    )
+    buy_prepaid_ticket(selected_type)
+    print(messages['ticket_bought'])
 
 
-def check_balance_ui():
+def check_prepaid_balance_ui():
     pass
 
 
 def recharge_prepaid_ticket_ui():
+    pass
+
+
+def use_prepaid_ticket_ui():
     pass
 
 
@@ -112,7 +126,8 @@ def ui():
         main_menu_buy_a_ticket_options = {
             'buy_short_term_ticket': buy_short_term_ticket_ui,
             'buy_long_term_ticket': buy_long_term_ticket_ui,
-            'assign_to_prepaid': assign_to_prepaid_ui
+            'buy_prepaid': buy_prepaid_ticket_ui,
+            'use_prepaid': use_prepaid_ticket_ui
         }
 
         main_menu_buy_a_ticket_option = get_input(
@@ -125,7 +140,7 @@ def ui():
     elif main_menu_option == main_menu_options[1]:
         main_menu_check_status_options = {
             'check_status': check_long_term_ticket_status_ui,
-            'check_balance': check_balance_ui
+            'check_balance': check_prepaid_balance_ui
         }
 
         main_menu_check_status_option = get_input(
@@ -147,5 +162,6 @@ def ui():
             menu_options=list(main_menu_recharge_options.keys())
         )
         main_menu_recharge_options[main_menu_recharge_option](messages)
+
 
 ui()
