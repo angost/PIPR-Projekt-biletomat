@@ -7,24 +7,6 @@ from input_output_functions import (
 )
 
 
-# class Ticket:
-#     def __init__(self, id, data):
-#         self.id = id
-#         self.data = data
-#         self.save_to_file()
-
-#     def save_to_file(self):
-#         with open(f'{self.id}.txt', 'w') as file_handle:
-#             headers = ['id'] + list(self.data.keys())
-#             file_data = {'id': self.id}
-#             for property in self.data:
-#                 file_data[property] = self.data[property]
-
-#             writer = csv.DictWriter(file_handle, headers)
-#             writer.writeheader()
-#             writer.writerow(file_data)
-
-
 class Long_Term_Ticket():
     def __init__(self, id, date_of_purchase, duration):
         self.id = id
@@ -68,21 +50,32 @@ class Long_Term_Ticket():
         self.save_to_file()
 
 
-# class Long_Term_Prepaid_Ticket(Ticket):
-#     def __init__(self, id, data):
-#         super().__init__(id, data)
-#         # data should include: balance, active_ticket
+class Prepaid_Ticket():
+    def __init__(self, id, balance):
+        self.id = id
+        self.balance = balance
+        self.path = f'./ticket_database/prepaid_tickets/{self.id}'
+        if not Path(self.path + '.txt').is_file():
+            self.save_to_file()
 
-#     def check_balance(self):
-#         return float(self.data['balance'])
+    def save_to_file(self):
+        headers = ['id', 'value']
+        ticket_data = [{
+            'id': self.id,
+            'value': self.value
+        }]
+        write_to_csv(self.path, ticket_data, headers)
 
-#     def recharge_ticket(self, value):
-#         self.data['balance'] = self.check_balance() + value
-#         self.save_to_file()
-#         return 1
+    def check_balance(self):
+        return self.balance
 
-#     def use_prepaid(self, ticket, price):
-#         self.data['assigned_ticket'] = ticket
-#         self.data['balance'] = self.check_balance() - price
-#         self.save_to_file()
-#         return 1
+    def recharge_ticket(self, value):
+        self.balance = self.check_balance() + value
+        self.save_to_file()
+
+    def use_prepaid(self, price):
+        new_balance = self.check_balance() - price
+        if new_balance:
+            self.balance = new_balance
+            self.save_to_file()
+        
