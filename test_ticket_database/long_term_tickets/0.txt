@@ -1,0 +1,2 @@
+id,date_of_purchase,duration
+0,2023-01-20,30
