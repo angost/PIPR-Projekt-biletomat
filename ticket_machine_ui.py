@@ -2,7 +2,8 @@
 from input_output_functions import (
     read_from_csv,
     get_input,
-    get_input_id
+    get_input_id,
+    clear_screen
 )
 from ticket_operations import (
     buy_short_term_ticket,
@@ -140,14 +141,7 @@ def use_prepaid_ticket_ui(messages):
         print(messages['balance_too_low'])
 
 
-def ui():
-    messages = change_language('ENG')
-    available_languages = ['ENG', 'PL']
-    language = get_input(
-        'choose_language',
-        messages, menu_options=available_languages
-    )
-    messages = change_language(language)
+def ui(messages):
 
     main_menu_options = [
         'main_menu_buy_a_ticket',
@@ -203,8 +197,19 @@ def ui():
 
 
 def main():
+    clear_screen()
+    messages = change_language('ENG')
+    available_languages = ['ENG', 'PL']
+    language = get_input(
+        'choose_language',
+        messages, menu_options=available_languages
+    )
+    messages = change_language(language)
     while True:
         try:
-            ui()
+            ui(messages)
         except KeyboardInterrupt:
             break
+
+
+main()

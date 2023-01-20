@@ -2,6 +2,17 @@
 import csv
 from tabulate import tabulate
 from pathlib import Path
+import os
+# from time import sleep
+
+
+def clear_screen():
+    # Linux/Mac
+    if os.name == 'posix':
+        os.system('clear')
+    # Windows
+    else:
+        os.system('cls')
 
 
 def read_from_csv(file_name):
@@ -80,6 +91,7 @@ def get_input(message, messages, menu_options=None, ticket_data=None):
     }
     # Getting user input
     user_input = None
+    print('\n> > >\n')
     while user_input not in range(len(list_of_options[input_type])):
         print_function[input_type](list_of_options[input_type], messages)
         try:
@@ -87,14 +99,14 @@ def get_input(message, messages, menu_options=None, ticket_data=None):
             user_input = int(input(messages[message] + ' '))
         except ValueError:
             user_input = None
-        print('')
-    print('')
+        clear_screen()
     return list_of_options[input_type][user_input]
 
 
 def get_input_id(message, messages, path):
     user_input = None
     id_exists = False
+    print('\n> > >\n')
     while not id_exists:
         user_input = input(messages[message] + ' ')
         try:
@@ -106,6 +118,5 @@ def get_input_id(message, messages, path):
         except ValueError:
             user_input = None
 
-        print('')
-    print('')
+        clear_screen()
     return user_input
