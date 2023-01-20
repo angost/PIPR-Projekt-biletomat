@@ -70,11 +70,11 @@ class Prepaid_Ticket():
         return self.balance
 
     def recharge_ticket(self, value):
-        self.balance = self.check_balance() + value
+        self.balance = round(self.check_balance() + value, 2)
         self.save_to_file()
 
     def use_prepaid(self, price):
-        new_balance = self.check_balance() - price
+        new_balance = round(self.check_balance() - price, 2)
         if new_balance:
             self.balance = new_balance
             self.save_to_file()
