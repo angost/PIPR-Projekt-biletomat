@@ -34,7 +34,12 @@ def buy_short_term_ticket(ticket_to_buy):
         write_to_csv(file_name, tickets_data_from_database, headers)
 
 
-def choose_id(database_path):
+def choose_id(database_path: str) -> int:
+    """
+    Returns id which should be next in the database
+    """
+    if not Path(database_path).is_dir():
+        raise Exception
     with open(database_path + '/last_id.txt', 'r') as file_handle:
         new_id = int(file_handle.readline()) + 1
     with open(database_path + '/last_id.txt', 'w') as file_handle:
