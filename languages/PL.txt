@@ -42,3 +42,4 @@ currency,zl
 recharged,Doladowano bilet
 new_balance,Aktualne srodki
 balance_too_low,Za malo srodkow aby kupic ten bilet
+show_id,Id twojego biletu to

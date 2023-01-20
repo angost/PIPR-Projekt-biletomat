@@ -46,6 +46,7 @@ def buy_long_term_ticket(ticket_to_buy):
     id = choose_id('./ticket_database/long_term_tickets')
     current_date = date.today()
     Long_Term_Ticket(id, current_date, ticket_to_buy['duration'])
+    return id
 
 
 def get_ticket_from_database(id):
@@ -81,6 +82,7 @@ def prolong_long_term_ticket(id, added_ticket):
 def buy_prepaid_ticket(ticket_to_buy):
     id = choose_id('./ticket_database/prepaid_tickets')
     Prepaid_Ticket(id, int(ticket_to_buy['value']))
+    return id
 
 
 def get_prepaid_ticket_from_database(id):

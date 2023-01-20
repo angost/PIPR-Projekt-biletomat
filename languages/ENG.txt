@@ -42,3 +42,4 @@ currency,PLN
 recharged,Ticket recharged successfully
 new_balance,Current balance
 balance_too_low,Insufficient funds to buy this ticket
+show_id,Your ticket's id is

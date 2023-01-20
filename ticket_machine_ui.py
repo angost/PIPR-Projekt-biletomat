@@ -55,8 +55,9 @@ def choose_long_term_ticket(messages):
 
 def buy_long_term_ticket_ui(messages):
     selected_type = choose_long_term_ticket(messages)
-    buy_long_term_ticket(selected_type)
+    id = buy_long_term_ticket(selected_type)
     print(messages['ticket_bought'])
+    print(f'{messages["show_id"]}: {id}')
 
 
 def check_long_term_ticket_status_ui(messages):
@@ -98,8 +99,9 @@ def choose_prepaid_ticket(messages):
 
 def buy_prepaid_ticket_ui(messages):
     selected_type = choose_prepaid_ticket(messages)
-    buy_prepaid_ticket(selected_type)
+    id = buy_prepaid_ticket(selected_type)
     print(messages['ticket_bought'])
+    print(f'{messages["show_id"]}: {id}')
 
 
 def check_prepaid_balance_ui(messages):
@@ -198,6 +200,3 @@ def ui():
             menu_options=list(main_menu_recharge_options.keys())
         )
         main_menu_recharge_options[main_menu_recharge_option](messages)
-
-
-ui()
