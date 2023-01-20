@@ -200,3 +200,11 @@ def ui():
             menu_options=list(main_menu_recharge_options.keys())
         )
         main_menu_recharge_options[main_menu_recharge_option](messages)
+
+
+def main():
+    while True:
+        try:
+            ui()
+        except KeyboardInterrupt:
+            break
