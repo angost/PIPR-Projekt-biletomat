@@ -34,3 +34,4 @@ ticket_expired,Bilet wygasl
 prolong_long_term_ticket,Doladuj bilet dlugoterminowy
 ticket_prolonged,Bilet zostal przedluzony
 cannot_prolong,Za wczesnie zeby przedluzyc bilet
+ticket_bought,Zakupiono bilet

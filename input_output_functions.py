@@ -73,6 +73,7 @@ def get_input(message, messages, menu_options=None, ticket_data=None):
     while user_input not in range(len(list_of_options[input_type])):
         print_function[input_type](list_of_options[input_type], messages)
         try:
+            print('')
             user_input = int(input(messages[message] + ' '))
         except ValueError:
             user_input = None

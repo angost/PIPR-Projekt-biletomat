@@ -30,6 +30,7 @@ def buy_short_term_ticket_ui(messages):
         ticket_data=short_term_ticket_types
     )
     buy_short_term_ticket(selected_type)
+    print(messages['ticket_bought'])
 
 
 def choose_long_term_ticket(messages):
@@ -46,6 +47,7 @@ def choose_long_term_ticket(messages):
 def buy_long_term_ticket_ui(messages):
     selected_type = choose_long_term_ticket(messages)
     buy_long_term_ticket(selected_type)
+    print(messages['ticket_bought'])
 
 
 def check_long_term_ticket_status_ui(messages):
@@ -145,3 +147,5 @@ def ui():
             menu_options=list(main_menu_recharge_options.keys())
         )
         main_menu_recharge_options[main_menu_recharge_option](messages)
+
+ui()

@@ -34,3 +34,4 @@ ticket_expired,Ticket has expired on
 prolong_long_term_ticket,Prolong long-term ticket
 ticket_prolonged,Your ticket was prolonged
 cannot_prolong,Too soon to prolong your ticket
+ticket_bought,Ticket bought successfully
