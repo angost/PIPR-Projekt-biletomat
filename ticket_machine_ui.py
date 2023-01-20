@@ -12,8 +12,8 @@ from ticket_operations import (
     can_ticket_be_prolonged,
     buy_prepaid_ticket,
     check_prepaid_balance,
-    recharge_prepaid_ticket
-    # use_prepaid_ticket
+    recharge_prepaid_ticket,
+    use_prepaid_ticket
 )
 
 
@@ -25,7 +25,7 @@ def change_language(language):
     return messages
 
 
-def buy_short_term_ticket_ui(messages):
+def choose_short_term_ticket(messages):
     ticket_types_file = './available_ticket_types/short_term_ticket_types'
     short_term_ticket_types = read_from_csv(ticket_types_file)
     selected_type = get_input(
@@ -33,6 +33,11 @@ def buy_short_term_ticket_ui(messages):
         messages,
         ticket_data=short_term_ticket_types
     )
+    return selected_type
+
+
+def buy_short_term_ticket_ui(messages):
+    selected_type = choose_short_term_ticket(messages)
     buy_short_term_ticket(selected_type)
     print(messages['ticket_bought'])
 
@@ -117,7 +122,20 @@ def recharge_prepaid_ticket_ui(messages):
 
 
 def use_prepaid_ticket_ui(messages):
-    pass
+    # Getting user's ticket
+    path = './ticket_database/prepaid_tickets'
+    valid_id = get_input_id('enter_id', messages, path)
+    # Selecting short-term ticket
+    selected_type = choose_short_term_ticket(messages)
+    # Using prepaid if balance is enough
+    if use_prepaid_ticket(valid_id, selected_type):
+        print(messages['ticket_bought'])
+        new_balance = check_prepaid_balance(valid_id)
+        mess_new_balance = messages["new_balance"]
+        mess_currency = messages["currency"]
+        print(f'{mess_new_balance}: {new_balance} ({mess_currency})')
+    else:
+        print(messages['balance_too_low'])
 
 
 def ui():

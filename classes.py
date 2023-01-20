@@ -78,3 +78,5 @@ class Prepaid_Ticket():
         if new_balance:
             self.balance = new_balance
             self.save_to_file()
+            return 1
+        return 0

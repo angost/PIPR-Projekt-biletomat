@@ -88,7 +88,7 @@ def get_prepaid_ticket_from_database(id):
     ticket_data = read_from_csv(f'{path}/{id}')[0]
     ticket = Prepaid_Ticket(
         ticket_data['id'],
-        int(ticket_data['balance'])
+        float(ticket_data['balance'])
     )
     return ticket
 
@@ -104,5 +104,10 @@ def recharge_prepaid_ticket(id, added_ticket):
     ticket.recharge_ticket(added_value)
 
 
-def use_prepaid_ticket():
-    pass
+def use_prepaid_ticket(id, bought_ticket):
+    ticket = get_prepaid_ticket_from_database(id)
+    price = float(bought_ticket['price'])
+    if ticket.use_prepaid(price):
+        buy_short_term_ticket(bought_ticket)
+        return 1
+    return 0
