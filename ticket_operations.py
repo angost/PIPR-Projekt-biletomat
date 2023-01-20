@@ -80,7 +80,7 @@ def prolong_long_term_ticket(id, added_ticket):
 
 def buy_prepaid_ticket(ticket_to_buy):
     id = choose_id('./ticket_database/prepaid_tickets')
-    Prepaid_Ticket(id, ticket_to_buy['value'])
+    Prepaid_Ticket(id, int(ticket_to_buy['value']))
 
 
 def get_prepaid_ticket_from_database(id):
@@ -88,7 +88,7 @@ def get_prepaid_ticket_from_database(id):
     ticket_data = read_from_csv(f'{path}/{id}')[0]
     ticket = Prepaid_Ticket(
         ticket_data['id'],
-        ticket_data['balance']
+        int(ticket_data['balance'])
     )
     return ticket
 
@@ -96,6 +96,12 @@ def get_prepaid_ticket_from_database(id):
 def check_prepaid_balance(id):
     ticket = get_prepaid_ticket_from_database(id)
     return ticket.check_balance()
+
+
+def recharge_prepaid_ticket(id, added_ticket):
+    ticket = get_prepaid_ticket_from_database(id)
+    added_value = int(added_ticket['value'])
+    ticket.recharge_ticket(added_value)
 
 
 def use_prepaid_ticket():

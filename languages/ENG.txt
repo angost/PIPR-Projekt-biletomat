@@ -39,3 +39,5 @@ buy_prepaid,Buy prepaid ticket
 choose_value,Choose ticket's value
 show_balance,Balance
 currency,PLN
+recharged,Ticket recharged successfully
+new_balance,Current balance

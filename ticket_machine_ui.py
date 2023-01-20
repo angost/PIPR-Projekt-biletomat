@@ -12,7 +12,8 @@ from ticket_operations import (
     can_ticket_be_prolonged,
     buy_prepaid_ticket,
     check_prepaid_balance,
-    use_prepaid_ticket
+    recharge_prepaid_ticket
+    # use_prepaid_ticket
 )
 
 
@@ -79,7 +80,7 @@ def prolong_long_term_ticket_ui(messages):
         print(messages['cannot_prolong'])
 
 
-def buy_prepaid_ticket_ui(messages):
+def choose_prepaid_ticket(messages):
     ticket_types_file = './available_ticket_types/prepaid_ticket_types'
     prepaid_ticket_types = read_from_csv(ticket_types_file)
     selected_type = get_input(
@@ -87,6 +88,11 @@ def buy_prepaid_ticket_ui(messages):
         messages,
         ticket_data=prepaid_ticket_types
     )
+    return selected_type
+
+
+def buy_prepaid_ticket_ui(messages):
+    selected_type = choose_prepaid_ticket(messages)
     buy_prepaid_ticket(selected_type)
     print(messages['ticket_bought'])
 
@@ -98,11 +104,19 @@ def check_prepaid_balance_ui(messages):
     print(f'{messages["show_balance"]}: {balance} ({messages["currency"]})')
 
 
-def recharge_prepaid_ticket_ui():
-    pass
+def recharge_prepaid_ticket_ui(messages):
+    # Getting user's ticket
+    path = './ticket_database/prepaid_tickets'
+    valid_id = get_input_id('enter_id', messages, path)
+    # Recharging
+    selected_type = choose_prepaid_ticket(messages)
+    recharge_prepaid_ticket(valid_id, selected_type)
+    print(messages['recharged'])
+    new_balance = check_prepaid_balance(valid_id)
+    print(f'{messages["new_balance"]}: {new_balance} ({messages["currency"]})')
 
 
-def use_prepaid_ticket_ui():
+def use_prepaid_ticket_ui(messages):
     pass
 
 
