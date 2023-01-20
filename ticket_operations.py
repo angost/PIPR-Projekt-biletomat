@@ -45,7 +45,7 @@ def choose_id(database_path):
 def buy_long_term_ticket(ticket_to_buy):
     id = choose_id('./ticket_database/long_term_tickets')
     current_date = date.today()
-    Long_Term_Ticket(new_id, current_date, ticket_to_buy['duration'])
+    Long_Term_Ticket(id, current_date, ticket_to_buy['duration'])
 
 
 def get_ticket_from_database(id):
