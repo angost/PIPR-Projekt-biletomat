@@ -3,11 +3,13 @@ import pytest
 from pathlib import Path
 from ticket_operations import (
     choose_id,
+    buy_short_term_ticket,
     buy_long_term_ticket,
     get_ticket_from_database
 )
 from input_output_functions import (
-    read_from_csv
+    read_from_csv,
+    write_to_csv
 )
 
 
@@ -19,13 +21,54 @@ def test_choose_id():
     assert choose_id(database_path) == 1
 
 
-def test_choose_id_path_does_not_exist():
-    database_path = './test_ticket_database/long_term_tickets/a'
-    if Path(database_path).is_dir():
-        Path(database_path).unlink()
+def test_buy_short_term_ticket_no_data_yet():
+    ticket_types_file = './available_ticket_types/short_term_ticket_types'
+    available_ticket_types = read_from_csv(ticket_types_file)
+    ticket_to_buy = available_ticket_types[0]
 
-    with pytest.raises(Exception):
-        choose_id(database_path)
+    folder_path = './test_ticket_database'
+    file_path = folder_path + './short_term_tickets_data.txt'
+    if Path(file_path).is_file():
+        Path(file_path).unlink()
+
+    buy_short_term_ticket(ticket_to_buy, folder_path)
+    assert Path(file_path).is_file() == 1
+    ticket_data = read_from_csv(folder_path + './short_term_tickets_data')
+    for ticket_type in ticket_data:
+        if ticket_type['ticket_type'] == ticket_to_buy['name']:
+            assert ticket_type['number_sold'] == '1'
+        else:
+            assert ticket_type['number_sold'] == '0'
+
+
+def test_buy_short_term_ticket_data_exists():
+    ticket_types_file = './available_ticket_types/short_term_ticket_types'
+    available_ticket_types = read_from_csv(ticket_types_file)
+    ticket_to_buy = available_ticket_types[0]
+
+    folder_path = './test_ticket_database'
+    file_path = folder_path + './short_term_tickets_data.txt'
+
+    tickets_data_from_database = []
+    for ticket_type in available_ticket_types:
+        tickets_data_from_database.append({
+                'ticket_type': ticket_type['name'],
+                'number_sold': 0
+        })
+    write_to_csv(
+        folder_path + './short_term_tickets_data',
+        tickets_data_from_database,
+        ['ticket_type', 'number_sold']
+    )
+
+    buy_short_term_ticket(ticket_to_buy, folder_path)
+    assert Path(file_path).is_file() == 1
+    ticket_data = read_from_csv(folder_path + './short_term_tickets_data')
+    for ticket_type in ticket_data:
+        if ticket_type['ticket_type'] == ticket_to_buy['name']:
+            assert ticket_type['number_sold'] == '1'
+        else:
+            assert ticket_type['number_sold'] == '0'
 
 
 

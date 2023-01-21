@@ -7,9 +7,31 @@ from input_output_functions import (
 from classes import Long_Term_Ticket, Prepaid_Ticket
 
 
-def buy_short_term_ticket(ticket_to_buy):
-    file_name = './ticket_database/short_term_tickets_data'
+class TicketTypeNotFoundError(Exception):
+    pass
+
+
+class InvalidTicketDataError(Exception):
+    pass
+
+
+class InvalidPathError(Exception):
+    pass
+
+
+def buy_short_term_ticket(ticket_to_buy: dict, folder_path: str):
+    """
+    Updates short_term_tickets_data file which holds info
+    how much of each short term ticket type was bought
+
+    ticket_to_buy - dicts with ticket info
+    folder_path - holds path to a folder where file should be located
+    """
+    file_name = folder_path + './short_term_tickets_data'
     path = Path(file_name + '.txt')
+
+    if not Path(folder_path).is_dir():
+        raise InvalidPathError
 
     # Getting current ticket info
     tickets_data_from_database = []
@@ -24,22 +46,29 @@ def buy_short_term_ticket(ticket_to_buy):
     else:
         tickets_data_from_database = read_from_csv(file_name)
 
-    # Adding a ticket
-    for ticket in tickets_data_from_database:
-        if ticket['ticket_type'] == ticket_to_buy['name']:
-            ticket['number_sold'] = int(ticket['number_sold']) + 1
+    try:
+        # Adding a ticket
+        found_ticket = False
+        for ticket in tickets_data_from_database:
+            if ticket['ticket_type'] == ticket_to_buy['name']:
+                ticket['number_sold'] = int(ticket['number_sold']) + 1
+                found_ticket = True
+        if not found_ticket:
+            raise TicketTypeNotFoundError
+    except KeyError:
+        raise InvalidTicketDataError
 
     # Updating the database
-        headers = ['ticket_type', 'number_sold']
-        write_to_csv(file_name, tickets_data_from_database, headers)
+    headers = ['ticket_type', 'number_sold']
+    write_to_csv(file_name, tickets_data_from_database, headers)
 
 
 def choose_id(database_path: str) -> int:
     """
-    Returns id which should be next in the database
+    Returns id which should be next in the database.
     """
     if not Path(database_path).is_dir():
-        raise Exception
+        raise InvalidPath
     with open(database_path + '/last_id.txt', 'r') as file_handle:
         new_id = int(file_handle.readline()) + 1
     with open(database_path + '/last_id.txt', 'w') as file_handle:

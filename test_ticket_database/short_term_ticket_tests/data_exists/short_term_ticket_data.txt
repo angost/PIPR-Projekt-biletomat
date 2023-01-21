@@ -1,0 +1,13 @@
+ticket_type,number_sold
+
+20_min_reduced,0
+
+20_min_standard,0
+
+75_min_reduced,0
+
+75_min_standard,0
+
+90_min_reduced,0
+
+90_min_standard,0
