@@ -6,7 +6,11 @@ from input_output_functions import (
     read_from_csv,
     write_to_csv
 )
-from classes import Long_Term_Ticket, Prepaid_Ticket
+from classes import (
+    Long_Term_Ticket,
+    Prepaid_Ticket,
+    InvalidTicketPropertyError
+)
 
 
 def remove_previous_file(folder_path: str, path: str):
@@ -54,7 +58,14 @@ def test_create_Long_Term_Ticket_data_already_exists():
 
 
 def test_create_Long_Term_Ticket_incorrect_data():
-    pass
+    invalid_date = (date.today() + timedelta(days=1)).isoformat()
+    folder_path = './test_ticket_database/long_term_tickets'
+    with pytest.raises(InvalidTicketPropertyError):
+        Long_Term_Ticket(-1, '2023-01-20', 30, folder_path)
+    with pytest.raises(InvalidTicketPropertyError):
+        Long_Term_Ticket(0, invalid_date, 30, folder_path)
+    with pytest.raises(InvalidTicketPropertyError):
+        Long_Term_Ticket(0, '2023-01-20', -5, folder_path)
 
 
 def test_Long_Term_Ticket_save_to_file_change_data():

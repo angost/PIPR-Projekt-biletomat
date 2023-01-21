@@ -6,6 +6,30 @@ from input_output_functions import (
 )
 
 
+class TicketTypeNotFoundError(Exception):
+    pass
+
+
+class InvalidTicketDataError(Exception):
+    pass
+
+
+class InvalidPathError(Exception):
+    pass
+
+
+class InvalidDataError(Exception):
+    pass
+
+
+class InvalidTicketPropertyError(Exception):
+    pass
+
+
+class Ticket_Not_in_DatabaseError(Exception):
+    pass
+
+
 class Long_Term_Ticket():
     def __init__(
         self,
@@ -19,13 +43,13 @@ class Long_Term_Ticket():
         Creates a file with its data.
         """
         if id < 0:
-            raise Exception
+            raise InvalidTicketPropertyError
         if date.fromisoformat(date_of_purchase) > date.today():
-            raise Exception
+            raise InvalidTicketPropertyError
         if duration < 0:
-            raise Exception
+            raise InvalidTicketPropertyError
         if not Path(folder_path).is_dir():
-            raise Exception
+            raise InvalidPathError
 
         self.id = id
         self.date_of_purchase = date_of_purchase
@@ -67,7 +91,7 @@ class Long_Term_Ticket():
         Sets date_of_purchase to current day
         """
         if added_duration < 0:
-            raise Exception
+            raise InvalidTicketPropertyError
         days_left = self.check_status()['days_left']
         new_date_of_purchase = date.today().isoformat()
         self.date_of_purchase = new_date_of_purchase

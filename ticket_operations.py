@@ -4,23 +4,16 @@ from input_output_functions import (
     read_from_csv,
     write_to_csv
 )
-from classes import Long_Term_Ticket, Prepaid_Ticket
-
-
-class TicketTypeNotFoundError(Exception):
-    pass
-
-
-class InvalidTicketDataError(Exception):
-    pass
-
-
-class InvalidPathError(Exception):
-    pass
-
-
-class InvalidDataError(Exception):
-    pass
+from classes import (
+    Long_Term_Ticket,
+    Prepaid_Ticket,
+    TicketTypeNotFoundError,
+    InvalidTicketDataError,
+    InvalidPathError,
+    InvalidDataError,
+    InvalidTicketPropertyError,
+    Ticket_Not_in_DatabaseError
+)
 
 
 def buy_short_term_ticket(ticket_to_buy: dict, folder_path: str):
@@ -84,40 +77,83 @@ def choose_id(database_path: str) -> int:
     return new_id
 
 
-def buy_long_term_ticket(ticket_to_buy):
-    id = choose_id('./ticket_database/long_term_tickets')
-    current_date = date.today()
-    Long_Term_Ticket(id, current_date, ticket_to_buy['duration'])
+def buy_long_term_ticket(ticket_to_buy: dict, folder_path: str) -> int:
+    """
+    Sets ticket's id.
+    Creates instance of Long_Term_Ticket class.
+    Returns created ticket's id.
+    """
+    id = choose_id(folder_path)
+
+    current_date = date.today().isoformat()
+    try:
+        ticket_duration = int(ticket_to_buy['duration'])
+    except KeyError:
+        raise InvalidTicketDataError
+    except ValueError:
+        raise InvalidTicketDataError
+
+    Long_Term_Ticket(id, current_date, ticket_duration, folder_path)
     return id
 
 
-def get_ticket_from_database(id):
-    path = './ticket_database/long_term_tickets'
-    ticket_data = read_from_csv(f'{path}/{id}')[0]
-    ticket = Long_Term_Ticket(
-        ticket_data['id'],
-        ticket_data['date_of_purchase'],
-        ticket_data['duration']
-    )
+def get_ticket_from_database(id: int, folder_path: str) -> Long_Term_Ticket:
+    """
+    Returns instance of Long_Term_Ticket class with data
+    existing in database.
+    """
+    if not Path((f'{folder_path}/{id}' + '.txt')).is_file():
+        raise Ticket_Not_in_DatabaseError
+    ticket_data = read_from_csv(f'{folder_path}/{id}')[0]
+
+    try:
+        ticket = Long_Term_Ticket(
+            int(ticket_data['id']),
+            ticket_data['date_of_purchase'],
+            int(ticket_data['duration']),
+            folder_path
+        )
+    except KeyError:
+        raise InvalidDataError
+    except ValueError:
+        raise InvalidDataError
     return ticket
 
 
-def check_long_term_ticket_status(id):
-    ticket = get_ticket_from_database(id)
+def check_long_term_ticket_status(id: int, folder_path: str) -> dict:
+    """
+    Checks status of ticket with given id.
+    Returns dict with 'days_left' and 'expires' keys
+    """
+    ticket = get_ticket_from_database(id, folder_path)
     return ticket.check_status()
 
 
-def can_ticket_be_prolonged(id):
+def can_ticket_be_prolonged(id: int, folder_path: str) -> list:
+    """
+    Return 2 element list.
+    First element is True if ticket can be prolonged.
+    Second element is a number of days till expiration
+    to allow prolonging (7)
+    """
     days_left_to_allow_prolonging = 7
-    status_info = check_long_term_ticket_status(id)
+    status_info = check_long_term_ticket_status(id, folder_path)
     if status_info['days_left'] <= days_left_to_allow_prolonging:
         return [True, days_left_to_allow_prolonging]
     return [False, days_left_to_allow_prolonging]
 
 
-def prolong_long_term_ticket(id, added_ticket):
-    ticket = get_ticket_from_database(id)
-    added_duration = added_ticket['duration']
+def prolong_long_term_ticket(id: int, added_ticket: dict, folder_path: str):
+    """
+    Prolongs ticket with given id with duration of given ticket type
+    """
+    ticket = get_ticket_from_database(id, folder_path)
+    try:
+        added_duration = int(added_ticket['duration'])
+    except KeyError:
+        raise InvalidDataError
+    except ValueError:
+        raise InvalidDataError
     ticket.prolong_ticket(added_duration)
 
 
