@@ -96,7 +96,7 @@ def buy_long_term_ticket_ui(messages: dict):
     """
     selected_type = choose_long_term_ticket(messages)
     path = './ticket_database/long_term_tickets'
-    buy_long_term_ticket(selected_type, path)
+    id = buy_long_term_ticket(selected_type, path)
     print(messages['ticket_bought'])
     print(f'{messages["show_id"]}: {id}')
 
@@ -209,7 +209,7 @@ def use_prepaid_ticket_ui(messages: dict):
     if use_prepaid_ticket(valid_id, selected_type, './ticket_database'):
         print(messages['ticket_bought'])
         new_balance = check_prepaid_balance(valid_id, path)
-        mess_new_balance = messages["new_balance"]
+        mess_new_balance = messages["show_balance"]
         mess_currency = messages["currency"]
         print(f'{mess_new_balance}: {new_balance} ({mess_currency})')
     else:
