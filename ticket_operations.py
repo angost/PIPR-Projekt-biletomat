@@ -19,6 +19,10 @@ class InvalidPathError(Exception):
     pass
 
 
+class InvalidDataError(Exception):
+    pass
+
+
 def buy_short_term_ticket(ticket_to_buy: dict, folder_path: str):
     """
     Updates short_term_tickets_data file which holds info
@@ -67,10 +71,14 @@ def choose_id(database_path: str) -> int:
     """
     Returns id which should be next in the database.
     """
-    if not Path(database_path).is_dir():
-        raise InvalidPath
-    with open(database_path + '/last_id.txt', 'r') as file_handle:
-        new_id = int(file_handle.readline()) + 1
+    try:
+        with open(database_path + '/last_id.txt', 'r') as file_handle:
+            new_id = int(file_handle.readline()) + 1
+    except FileNotFoundError:
+        raise InvalidPathError
+    except ValueError:
+        raise InvalidDataError
+
     with open(database_path + '/last_id.txt', 'w') as file_handle:
         file_handle.write(str(new_id))
     return new_id
