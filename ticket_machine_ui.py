@@ -18,7 +18,10 @@ from ticket_operations import (
 )
 
 
-def change_language(language):
+def change_language(language: str):
+    """
+    Changes ticket machine language
+    """
     messages = {}
     data = read_from_csv(f'./languages/{language}')
     for row in data:
@@ -26,7 +29,10 @@ def change_language(language):
     return messages
 
 
-def change_language_ui(messages):
+def change_language_ui(messages: dict):
+    """
+    Gets langage from user input and changes language
+    """
     available_languages = ['ENG', 'PL']
     language = get_input(
         'choose_language',
@@ -36,7 +42,10 @@ def change_language_ui(messages):
     return change_language(language)
 
 
-def choose_short_term_ticket(messages):
+def choose_short_term_ticket(messages: dict):
+    """
+    Gets short term ticket type from  user input
+    """
     ticket_types_file = './available_ticket_types/short_term_ticket_types'
     short_term_ticket_types = read_from_csv(ticket_types_file)
     selected_type = get_input(
@@ -47,13 +56,20 @@ def choose_short_term_ticket(messages):
     return selected_type
 
 
-def buy_short_term_ticket_ui(messages):
+def buy_short_term_ticket_ui(messages: dict):
+    """
+    Gets short term ticket type from user input.
+    Buys short term ticket.
+    """
     selected_type = choose_short_term_ticket(messages)
     buy_short_term_ticket(selected_type)
     print(messages['ticket_bought'])
 
 
-def choose_long_term_ticket(messages):
+def choose_long_term_ticket(messages: dict):
+    """
+    Gets long term ticket type from user input
+    """
     ticket_types_file = './available_ticket_types/long_term_ticket_types'
     long_term_ticket_types = read_from_csv(ticket_types_file)
     selected_type = get_input(
@@ -64,14 +80,22 @@ def choose_long_term_ticket(messages):
     return selected_type
 
 
-def buy_long_term_ticket_ui(messages):
+def buy_long_term_ticket_ui(messages: dict):
+    """
+    Gets long term ticket type from user input.
+    Buys long term ticket.
+    """
     selected_type = choose_long_term_ticket(messages)
     id = buy_long_term_ticket(selected_type)
     print(messages['ticket_bought'])
     print(f'{messages["show_id"]}: {id}')
 
 
-def check_long_term_ticket_status_ui(messages):
+def check_long_term_ticket_status_ui(messages: dict):
+    """
+    Gets long term ticket id from user input.
+    Checks its status.
+    """
     path = './ticket_database/long_term_tickets'
     valid_id = get_input_id('enter_id', messages, path)
     status_info = check_long_term_ticket_status(valid_id)
@@ -84,7 +108,11 @@ def check_long_term_ticket_status_ui(messages):
         print(f'{messages["ticket_expired"]}: {expires}')
 
 
-def prolong_long_term_ticket_ui(messages):
+def prolong_long_term_ticket_ui(messages: dict):
+    """
+    Gets long term ticket id from user input.
+    Prolongs it.
+    """
     # Getting user's ticket
     path = './ticket_database/long_term_tickets'
     valid_id = get_input_id('enter_id', messages, path)
@@ -101,7 +129,10 @@ def prolong_long_term_ticket_ui(messages):
         print(f'{messages["cannot_prolong"]}: {allow_prolonging[1]}')
 
 
-def choose_prepaid_ticket(messages):
+def choose_prepaid_ticket(messages: dict):
+    """
+    Gets prepaid ticket type from user input
+    """
     ticket_types_file = './available_ticket_types/prepaid_ticket_types'
     prepaid_ticket_types = read_from_csv(ticket_types_file)
     selected_type = get_input(
@@ -112,21 +143,33 @@ def choose_prepaid_ticket(messages):
     return selected_type
 
 
-def buy_prepaid_ticket_ui(messages):
+def buy_prepaid_ticket_ui(messages: dict):
+    """
+    Gets prepaid ticket type from user input
+    Buys prepaid ticket.
+    """
     selected_type = choose_prepaid_ticket(messages)
     id = buy_prepaid_ticket(selected_type)
     print(messages['ticket_bought'])
     print(f'{messages["show_id"]}: {id}')
 
 
-def check_prepaid_balance_ui(messages):
+def check_prepaid_balance_ui(messages: dict):
+    """
+    Gets prepaid ticket id from user input.
+    Checks its balance.
+    """
     path = './ticket_database/prepaid_tickets'
     valid_id = get_input_id('enter_id', messages, path)
     balance = check_prepaid_balance(valid_id)
     print(f'{messages["show_balance"]}: {balance} ({messages["currency"]})')
 
 
-def recharge_prepaid_ticket_ui(messages):
+def recharge_prepaid_ticket_ui(messages: dict):
+    """
+    Gets prepaid ticket id from user input.
+    Recharges it.
+    """
     # Getting user's ticket
     path = './ticket_database/prepaid_tickets'
     valid_id = get_input_id('enter_id', messages, path)
@@ -140,7 +183,12 @@ def recharge_prepaid_ticket_ui(messages):
     )
 
 
-def use_prepaid_ticket_ui(messages):
+def use_prepaid_ticket_ui(messages: dict):
+    """
+    Gets prepaid ticket id from user input.
+    Gets short term ticket type from user input.
+    Buys short term ticket using prepaid.
+    """
     # Getting user's ticket
     path = './ticket_database/prepaid_tickets'
     valid_id = get_input_id('enter_id', messages, path)
@@ -157,11 +205,17 @@ def use_prepaid_ticket_ui(messages):
         print(messages['balance_too_low'])
 
 
-def print_current_menu_option(text, messages):
+def print_current_menu_option(text, messages: dict):
+    """
+    Prints current menu option
+    """
     print(messages[text].upper())
 
 
-def ui(messages):
+def ui(messages: dict):
+    """
+    Main menu for user to navigate with
+    """
     print('')
     print_current_menu_option('menu', messages)
     main_menu_options = [
@@ -232,9 +286,10 @@ def main():
     clear_screen()
     messages = change_language('ENG')
     messages = change_language_ui(messages)
-    while True:
+    continue_loop = True
+    while continue_loop:
         try:
-            ui(messages)
+            continue_loop = ui(messages)
         except KeyboardInterrupt:
             break
 
