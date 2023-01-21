@@ -2,7 +2,7 @@ code_name,ui_message
 choose_language,Choose a language
 ENG,English
 PL,Polish
-menu,MENU GLOWNE
+menu,MAIN MENU
 choose_action,Choose an action
 main_menu_buy_a_ticket,Buy a ticket
 main_menu_check_status,Check your ticket's status
