@@ -44,3 +44,8 @@ currency,PLN
 recharged,Ticket recharged successfully
 balance_too_low,Insufficient funds to buy this ticket
 show_id,Your ticket's id is
+TICKET_MACHINE,T I C K E T   M A C H I N E
+start,Start
+quit,Quit
+controls,Press Ctrl+C to quit
+error,Sorry an error occured. It was reported to the technical support.

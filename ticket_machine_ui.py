@@ -16,6 +16,14 @@ from ticket_operations import (
     recharge_prepaid_ticket,
     use_prepaid_ticket
 )
+from classes import (
+    TicketTypeNotFoundError,
+    InvalidTicketDataError,
+    InvalidPathError,
+    InvalidDataError,
+    Ticket_Not_in_DatabaseError
+)
+from input_output_functions import NoInputTypeGivenError
 
 
 def change_language(language: str):
@@ -283,18 +291,58 @@ def ui(messages: dict):
     # CHANGE LANGUAGE
     elif main_menu_option == main_menu_options[3]:
         messages = change_language_ui(messages)
+    return messages
+
+
+def handle_exceptions(messages: dict, e: Exception):
+    with open('error_reports.txt', 'a') as file_handle:
+        file_handle.write(type(e).__name__)
+    print(messages['error'])
+    print('')
 
 
 def main():
     clear_screen()
     messages = change_language('ENG')
-    messages = change_language_ui(messages)
-    continue_loop = True
-    while continue_loop:
-        try:
-            ui(messages)
-        except KeyboardInterrupt:
-            break
+    try:
+        messages = change_language_ui(messages)
+        print(messages['TICKET_MACHINE'])
+        print(messages['controls'])
+        start_program = get_input(
+                'choose_action',
+                messages,
+                menu_options=['quit', 'start']
+        )
+        if start_program == 'start':
+            continue_loop = True
+        else:
+            continue_loop = False
+
+        while continue_loop:
+            try:
+                messages = ui(messages)
+            except TicketTypeNotFoundError as e:
+                handle_exceptions(messages, e)
+                continue_loop = False
+            except InvalidTicketDataError as e:
+                handle_exceptions(messages, e)
+                continue_loop = False
+            except InvalidPathError as e:
+                handle_exceptions(messages, e)
+                continue_loop = False
+            except InvalidDataError as e:
+                handle_exceptions(messages, e)
+                continue_loop = False
+            except Ticket_Not_in_DatabaseError as e:
+                handle_exceptions(messages, e)
+                continue_loop = False
+            except NoInputTypeGivenError as e:
+                handle_exceptions(messages, e)
+                continue_loop = False
+
+    except KeyboardInterrupt:
+        pass
 
 
-main()
+if __name__ == '__main__':
+    main()

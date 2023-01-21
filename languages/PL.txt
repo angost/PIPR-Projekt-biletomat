@@ -2,7 +2,7 @@ code_name,ui_message
 choose_language,Wybierz jezyk
 ENG,Angielski
 PL,Polski
-menu,MAIN MENU
+menu,MENU GLOWNE
 choose_action,Wybierz akcje
 main_menu_buy_a_ticket,Kup bilet
 main_menu_check_status,Sprawdz status swojego biletu
@@ -44,3 +44,8 @@ currency,zl
 recharged,Doladowano bilet
 balance_too_low,Za malo srodkow aby kupic ten bilet
 show_id,Id twojego biletu to
+TICKET_MACHINE,B I L E T O M A T
+start,Rozpocznij
+quit,Zakoncz
+controls,Nacisnij Ctrl+C aby zakonczyc
+error,Przepraszamy wystapil blad. Zostal zgloszony do obslugi technicznej.
