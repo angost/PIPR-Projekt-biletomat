@@ -30,6 +30,10 @@ class Ticket_Not_in_DatabaseError(Exception):
     pass
 
 
+class ExtendingCannotBeNegativeError(Exception):
+    pass
+
+
 class Long_Term_Ticket():
     def __init__(
         self,
@@ -91,7 +95,7 @@ class Long_Term_Ticket():
         Sets date_of_purchase to current day
         """
         if added_duration < 0:
-            raise InvalidTicketPropertyError
+            raise ExtendingCannotBeNegativeError
         days_left = self.check_status()['days_left']
         new_date_of_purchase = date.today().isoformat()
         self.date_of_purchase = new_date_of_purchase
@@ -113,11 +117,11 @@ class Prepaid_Ticket():
         Creates a file with its data.
         """
         if id < 0:
-            raise Exception
+            raise InvalidTicketPropertyError
         if balance < 0:
-            raise Exception
+            raise InvalidTicketPropertyError
         if not Path(folder_path).is_dir():
-            raise Exception
+            raise InvalidPathError
 
         self.id = id
         self.balance = balance
@@ -147,7 +151,7 @@ class Prepaid_Ticket():
         Adds value to ticket's balance
         """
         if value < 0:
-            raise Exception
+            raise ExtendingCannotBeNegativeError
         self.balance = round(self.check_balance() + value, 2)
         self.save_to_file()
 
@@ -157,7 +161,7 @@ class Prepaid_Ticket():
         Returns False if balance is too low.
         """
         if price < 0:
-            raise Exception
+            raise ExtendingCannotBeNegativeError
         new_balance = round(self.check_balance() - price, 2)
         if new_balance >= 0.0:
             self.balance = new_balance

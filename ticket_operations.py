@@ -11,7 +11,6 @@ from classes import (
     InvalidTicketDataError,
     InvalidPathError,
     InvalidDataError,
-    InvalidTicketPropertyError,
     Ticket_Not_in_DatabaseError
 )
 
@@ -99,7 +98,7 @@ def buy_long_term_ticket(ticket_to_buy: dict, folder_path: str) -> int:
 
 def get_ticket_from_database(id: int, folder_path: str) -> Long_Term_Ticket:
     """
-    Returns instance of Long_Term_Ticket class with data
+    Returns instance of Long_Term_Ticket class from data
     existing in database.
     """
     if not Path((f'{folder_path}/{id}' + '.txt')).is_file():
@@ -157,37 +156,89 @@ def prolong_long_term_ticket(id: int, added_ticket: dict, folder_path: str):
     ticket.prolong_ticket(added_duration)
 
 
-def buy_prepaid_ticket(ticket_to_buy):
-    id = choose_id('./ticket_database/prepaid_tickets')
-    Prepaid_Ticket(id, int(ticket_to_buy['value']))
+def buy_prepaid_ticket(ticket_to_buy: dict, folder_path: str) -> int:
+    """
+    Sets ticket's id.
+    Creates instance of Prepaid_Ticket class.
+    Returns created ticket's id.
+    """
+    id = choose_id(folder_path)
+
+    try:
+        value = float(ticket_to_buy['value'])
+    except KeyError:
+        raise InvalidTicketDataError
+    except ValueError:
+        raise InvalidTicketDataError
+    Prepaid_Ticket(id, value, folder_path)
     return id
 
 
-def get_prepaid_ticket_from_database(id):
-    path = './ticket_database/prepaid_tickets'
-    ticket_data = read_from_csv(f'{path}/{id}')[0]
-    ticket = Prepaid_Ticket(
-        ticket_data['id'],
-        float(ticket_data['balance'])
-    )
+def get_prepaid_ticket_from_database(
+    id: int, folder_path: str
+) -> Prepaid_Ticket:
+    """
+    Returns instance of Prepaid_Ticket class from
+    data existing in database.
+    """
+    if not Path((f'{folder_path}/{id}' + '.txt')).is_file():
+        raise Ticket_Not_in_DatabaseError
+    ticket_data = read_from_csv(f'{folder_path}/{id}')[0]
+
+    try:
+        ticket = Prepaid_Ticket(
+            int(ticket_data['id']),
+            float(ticket_data['balance']),
+            folder_path
+        )
+    except KeyError:
+        raise InvalidDataError
+    except ValueError:
+        raise InvalidDataError
     return ticket
 
 
-def check_prepaid_balance(id):
-    ticket = get_prepaid_ticket_from_database(id)
+def check_prepaid_balance(id: int, folder_path: str) -> float:
+    """
+    Returns balance of ticket in database with given id
+    """
+    ticket = get_prepaid_ticket_from_database(id, folder_path)
     return ticket.check_balance()
 
 
-def recharge_prepaid_ticket(id, added_ticket):
-    ticket = get_prepaid_ticket_from_database(id)
-    added_value = int(added_ticket['value'])
+def recharge_prepaid_ticket(id: int, added_ticket: dict, folder_path: str):
+    """
+    Increases balance of ticket with given id with value of given ticket type
+    """
+    ticket = get_prepaid_ticket_from_database(id, folder_path)
+    try:
+        added_value = float(added_ticket['value'])
+    except KeyError:
+        raise InvalidDataError
+    except ValueError:
+        raise InvalidDataError
     ticket.recharge_ticket(added_value)
 
 
-def use_prepaid_ticket(id, bought_ticket):
-    ticket = get_prepaid_ticket_from_database(id)
-    price = float(bought_ticket['price'])
+def use_prepaid_ticket(
+    id: int, bought_ticket: dict,
+    database_folder_path: str
+) -> bool:
+    """
+    If ticket's balance is enough, decrements bought_ticket's
+    price from it.
+    Returns True if balance was enough.
+    """
+    folder_path = database_folder_path + './prepaid_tickets'
+    ticket = get_prepaid_ticket_from_database(id, folder_path)
+    try:
+        price = float(bought_ticket['price'])
+    except KeyError:
+        raise InvalidDataError
+    except ValueError:
+        raise InvalidDataError
+
     if ticket.use_prepaid(price):
-        buy_short_term_ticket(bought_ticket)
+        buy_short_term_ticket(bought_ticket, database_folder_path)
         return 1
     return 0

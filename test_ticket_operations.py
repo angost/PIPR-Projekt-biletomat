@@ -7,7 +7,11 @@ from ticket_operations import (
     buy_short_term_ticket,
     buy_long_term_ticket,
     get_ticket_from_database,
-    can_ticket_be_prolonged
+    can_ticket_be_prolonged,
+    buy_prepaid_ticket,
+    get_prepaid_ticket_from_database,
+    check_prepaid_balance,
+    use_prepaid_ticket
 )
 from input_output_functions import (
     read_from_csv,
@@ -15,11 +19,11 @@ from input_output_functions import (
 )
 from classes import (
     Long_Term_Ticket,
+    Prepaid_Ticket,
     InvalidPathError,
     InvalidTicketDataError,
     TicketTypeNotFoundError,
     InvalidDataError,
-    InvalidTicketPropertyError,
     Ticket_Not_in_DatabaseError
 )
 
@@ -216,7 +220,7 @@ def test_get_ticket_from_database_does_not_exists():
     if Path(folder_path + './0.txt').is_file():
         Path(folder_path + './0.txt').unlink()
     with pytest.raises(Ticket_Not_in_DatabaseError):
-        ticket = get_ticket_from_database(0, folder_path)
+        get_ticket_from_database(0, folder_path)
 
 
 def test_can_ticket_be_prolonged_yes():
@@ -243,15 +247,60 @@ def test_can_ticket_be_prolonged_no():
     Long_Term_Ticket(0, date_of_purchase.isoformat(), 30, folder_path)
     assert can_ticket_be_prolonged(0, folder_path) == [0, 7]
 
-# def test_use_prepaid_ticket():
-#     file_short_term_types = './available_ticket_types/short_term_ticket_types'
-#     file_prepaid_types = './available_ticket_types/prepaid_ticket_types'
-#     prepaid_type = read_from_csv(file_prepaid_types)[0]
-#     bought_ticket = read_from_csv(file_short_term_types)[0]
-#     id = choose_id('./ticket_database/prepaid_tickets') + 1
 
-#     buy_prepaid_ticket(prepaid_type)
-#     use_prepaid_ticket(id, bought_ticket)
-#     recharge_prepaid_ticket(id, prepaid_type)
-#     use_prepaid_ticket(id, bought_ticket)
-#     assert check_prepaid_balance(id) == 36.6
+def test_buy_prepaid_ticket():
+    ticket_type = {'value': '200'}
+    folder_path = './test_ticket_database/prepaid_tickets'
+    with open(folder_path + './last_id.txt', 'w') as file_handle:
+        file_handle.write('-1')
+    if Path(folder_path + './0.txt').is_file():
+        Path(folder_path + './0.txt').unlink()
+    assert buy_prepaid_ticket(ticket_type, folder_path) == 0
+    assert Path(folder_path + './0.txt').is_file()
+    ticket_data = read_from_csv(folder_path + './0')
+    expected_ticket_data = {'id': '0', 'balance': '200.0'}
+    assert ticket_data[0] == expected_ticket_data
+
+
+def test_get_prepaid_ticket_from_database_exists():
+    folder_path = './test_ticket_database/prepaid_tickets'
+    if Path(folder_path + './0.txt').is_file():
+        Path(folder_path + './0.txt').unlink()
+    Prepaid_Ticket(0, 50.0, folder_path)
+    ticket = get_prepaid_ticket_from_database(0, folder_path)
+    assert ticket.id == 0
+    assert ticket.balance == 50.0
+
+
+def test_get_prepaid_ticket_from_database_does_not_exists():
+    folder_path = './test_ticket_database/prepaid_tickets'
+    if Path(folder_path + './0.txt').is_file():
+        Path(folder_path + './0.txt').unlink()
+    with pytest.raises(Ticket_Not_in_DatabaseError):
+        get_prepaid_ticket_from_database(0, folder_path)
+
+
+def test_use_prepaid_ticket_balance_enough():
+    folder_path = './test_ticket_database/prepaid_tickets'
+    bought_ticket = {'name': '90_min_standard', 'price': '7'}
+
+    if Path(folder_path + './0.txt').is_file():
+        Path(folder_path + './0.txt').unlink()
+    Prepaid_Ticket(0, 8.0, folder_path)
+    assert use_prepaid_ticket(0, bought_ticket, './test_ticket_database') == 1
+    assert check_prepaid_balance(0, folder_path) == 1.0
+
+    Path(folder_path + './0.txt').unlink()
+    Prepaid_Ticket(0, 7.0, folder_path)
+    assert use_prepaid_ticket(0, bought_ticket, './test_ticket_database') == 1
+    assert check_prepaid_balance(0, folder_path) == 0.
+
+
+def test_use_prepaid_ticket_balance_not_enough():
+    folder_path = './test_ticket_database/prepaid_tickets'
+    bought_ticket = {'name': '90_min_standard', 'price': '7'}
+    if Path(folder_path + './0.txt').is_file():
+        Path(folder_path + './0.txt').unlink()
+    Prepaid_Ticket(0, 6.0, folder_path)
+    assert use_prepaid_ticket(0, bought_ticket, './test_ticket_database') == 0
+    assert check_prepaid_balance(0, folder_path) == 6.0

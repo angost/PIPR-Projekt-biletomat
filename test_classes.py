@@ -9,20 +9,20 @@ from input_output_functions import (
 from classes import (
     Long_Term_Ticket,
     Prepaid_Ticket,
-    InvalidTicketPropertyError
+    InvalidTicketPropertyError,
+    ExtendingCannotBeNegativeError
 )
 
 
-def remove_previous_file(folder_path: str, path: str):
+def remove_previous_file(path: str):
     if Path(path + '.txt').is_file():
         Path(path + '.txt').unlink()
-    assert Path(path + '.txt').is_file() == 0
 
 
 def test_create_Long_Term_Ticket_new():
     folder_path = './test_ticket_database/long_term_tickets'
     path = folder_path + '/0'
-    remove_previous_file(folder_path, path)
+    remove_previous_file(path)
 
     ticket = Long_Term_Ticket(0, '2023-01-20', 30, folder_path)
     assert ticket.id == 0
@@ -71,7 +71,7 @@ def test_create_Long_Term_Ticket_incorrect_data():
 def test_Long_Term_Ticket_save_to_file_change_data():
     folder_path = './test_ticket_database/long_term_tickets'
     path = folder_path + '/0'
-    remove_previous_file(folder_path, path)
+    remove_previous_file(path)
     ticket = Long_Term_Ticket(0, '2023-01-20', 30, folder_path)
     ticket.duration = 35
     ticket.save_to_file()
@@ -144,14 +144,14 @@ def test_Long_Term_Ticket_prolong_negative_duration():
     folder_path = './test_ticket_database/long_term_tickets'
     ticket = Long_Term_Ticket(0, '2023-01-20', 30, folder_path)
     ticket.save_to_file()
-    with pytest.raises(Exception):
+    with pytest.raises(ExtendingCannotBeNegativeError):
         ticket.prolong_ticket(-1)
 
 
 def test_create_Prepaid_Ticket_new():
     folder_path = './test_ticket_database/prepaid_tickets'
     path = folder_path + '/0'
-    remove_previous_file(folder_path, path)
+    remove_previous_file(path)
 
     ticket = Prepaid_Ticket(0, 200.0, folder_path)
     assert ticket.id == 0
@@ -183,13 +183,21 @@ def test_create_Prepaid_Ticket_data_already_exists():
 
 
 def test_create_Prepaid_Ticket_incorrect_data():
-    pass
+    folder_path = './test_ticket_database/prepaid_tickets'
+    path = folder_path + '/0'
+
+    remove_previous_file(path)
+    with pytest.raises(InvalidTicketPropertyError):
+        Prepaid_Ticket(-1, 200.0, folder_path)
+    remove_previous_file(path)
+    with pytest.raises(InvalidTicketPropertyError):
+        Prepaid_Ticket(0, -5.0, folder_path)
 
 
 def test_Prepaid_Ticket_save_to_file_change_data():
     folder_path = './test_ticket_database/prepaid_tickets'
     path = folder_path + '/0'
-    remove_previous_file(folder_path, path)
+    remove_previous_file(path)
     ticket = Prepaid_Ticket(0, 200.0, folder_path)
     ticket.balance = 170.0
     ticket.save_to_file()
@@ -233,7 +241,12 @@ def test_Prepaid_Ticket_recharge_ticket_from_zero():
 
 
 def test_Prepaid_Ticket_recharge_ticket_value_negative():
-    pass
+    folder_path = './test_ticket_database/prepaid_tickets'
+    ticket = Prepaid_Ticket(0, 50.0, folder_path)
+    ticket.save_to_file()
+    with pytest.raises(ExtendingCannotBeNegativeError):
+        ticket.recharge_ticket(-50.0)
+    assert ticket.check_balance() == 50.0
 
 
 def test_Prepaid_Ticket_use_prepaid_can_afford():
@@ -256,9 +269,10 @@ def test_Prepaid_Ticket_use_prepaid_cannot_afford():
     assert ticket.use_prepaid(40.0) == 0
     assert ticket.check_balance() == 0.0
 
+
 def test_Prepaid_Ticket_use_prepaid_price_negative():
     folder_path = './test_ticket_database/prepaid_tickets'
     ticket = Prepaid_Ticket(0, 30.0, folder_path)
     ticket.save_to_file()
-    with pytest.raises(Exception):
+    with pytest.raises(ExtendingCannotBeNegativeError):
         ticket.use_prepaid(-10.0)
